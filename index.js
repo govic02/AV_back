@@ -17,7 +17,7 @@ const whapi = require('@api/whapi');
 const mondaySdk = require('monday-sdk-js')();
 const { Readable } = require('stream');
 const Cuadrante = require('./models/Cuadrante'); // Ajusta la ruta según tu estructura
-
+const Programa = require('./models/Programa');
 const UsuariosTelefono = require('./models/UsuariosTelefono');
 process.on('unhandledRejection', (err) => {
   console.error('Unhandled Rejection:', err);
@@ -48,105 +48,7 @@ const administratorNumbers = ['56963542290','56996401135','56990151534','5694638
 whapi.server('https://gate.whapi.cloud');
 whapi.auth('04xueyYUN6IZR2ANc9ekeamQPY2cH3XZ');
 const cuadrantesData = [
-  {
-    cuadrante: "Cuadrante 4",
-    plazas: [
-      { numero: 1, tipoAreaVerde: "Plaza", direccion: "José Nogueira entre Paraguaya y Bellavista" },
-      { numero: 2, tipoAreaVerde: "Plazoleta", direccion: "Oscar Viel entre Laura Castro y Luis Zelada" },
-      { numero: 3, tipoAreaVerde: "Plazoleta", direccion: "Manuel Ibañez Perez entre Carolina Villalobos y Laura Castro" },
-      { numero: 4, tipoAreaVerde: "Plazoleta", direccion: "Pje. Esteban Robles con Pje. Las Torpederas" },
-      { numero: 5, tipoAreaVerde: "Plazoleta", direccion: "Los Canelos con Los Copihues" },
-      { numero: 6, tipoAreaVerde: "Plazoleta", direccion: "C.5" },
-      { numero: 7, tipoAreaVerde: "Plazoleta", direccion: "C.4 con Pje. Las Lengas" },
-      { numero: 8, tipoAreaVerde: "Plazoleta", direccion: "C. 1 Proyectada con C.2 Proyectada" },
-      { numero: 9, tipoAreaVerde: "Plazoleta", direccion: "C.4 con Terrazas del Estrecho" },
-      { numero: 10, tipoAreaVerde: "Plazoleta", direccion: "C. 1 Proyectada entre C.4 y C. 4 Proyectada" },
-      { numero: 11, tipoAreaVerde: "Plazoleta", direccion: "Enrique Lizondo Calvo" },
-      { numero: 12, tipoAreaVerde: "Plazoleta", direccion: "Terrado con Terrazas del Estrecho" },
-      { numero: 13, tipoAreaVerde: "Plazoleta", direccion: "C. 4 Proyectada con Ponton Lord Lonsdale" },
-      { numero: 14, tipoAreaVerde: "Plazoleta", direccion: "Pje. Las Lomas" },
-      { numero: 15, tipoAreaVerde: "Plazoleta", direccion: "C.4 Proyectada entre C. 1 Proyectada y Calle 2 Proyectada" },
-      { numero: 16, tipoAreaVerde: "Plaza", direccion: "Enrique Lizondo Calvo" },
-      { numero: 17, tipoAreaVerde: "Plazoleta", direccion: "Pje. Padre Evaristo Pasone" },
-      { numero: 18, tipoAreaVerde: "Plazoleta", direccion: "C. Felicia Barria Vera con Av. Pdte. Jorge Alessandri R." },
-      { numero: 19, tipoAreaVerde: "Plazoleta", direccion: "Jaime Guzman Errazuris con Av. Pdte. Jorge Alessandri R." },
-      { numero: 20, tipoAreaVerde: "Plazoleta", direccion: "Armando Gomez Sotomayor con Av. Pdte. Jorge Alessandri R." },
-      { numero: 21, tipoAreaVerde: "Plazoleta", direccion: "Pje. Llancuyén con Av. Pdte. Jorge Alessandri R." },
-      { numero: 22, tipoAreaVerde: "Plazoleta", direccion: "Pje. Caburga con Llanquihue" },
-      { numero: 23, tipoAreaVerde: "Plazoleta", direccion: "Llanquihue entre Bucalemu y Pje. Llancuyen" },
-      { numero: 24, tipoAreaVerde: "Plazoleta", direccion: "Llanquihue" },
-      { numero: 25, tipoAreaVerde: "Plazoleta", direccion: "Llanquihue con Av. Pdte. Jorge Alessandri R." },
-      { numero: 26, tipoAreaVerde: "Plazoleta", direccion: "27 de Mayo con Av. Pdte. Jorge Alessandri R." },
-      { numero: 27, tipoAreaVerde: "Plazoleta", direccion: "Canal de la Reina con Av. Pdte. Jorge Alessandri R." },
-      { numero: 28, tipoAreaVerde: "Plazoleta", direccion: "27 de Mayo con Calle 1" },
-      { numero: 29, tipoAreaVerde: "Plazoleta", direccion: "Tucapel Jiménez Alfaro con Manuel Bustos Huerta" },
-      { numero: 30, tipoAreaVerde: "Plazoleta", direccion: "Av. Pdte. Jorge Alessandri R. entre Canal Ancho y Canal Magdalena" },
-      { numero: 31, tipoAreaVerde: "Plazoleta", direccion: "Av. Pdte. Jorge Alessandri R. entre Canal Nuevo y Canal Ancho" },
-      { numero: 32, tipoAreaVerde: "Plazoleta", direccion: "Av. Pdte. Jorge Alessandri R. entre Canal Magdalena y Manuel Rodriguez" },
-      { numero: 33, tipoAreaVerde: "Plazoleta", direccion: "Pje. Angela Magri Rabaglio con Pje. Gladys Marin Millie" },
-      { numero: 34, tipoAreaVerde: "Plazoleta", direccion: "Av. Guillermo Perez de Arce entre Arauco y Patagona" },
-      { numero: 35, tipoAreaVerde: "Plazoleta", direccion: "Capitan Ramon Serrano con Carlos Turina Blazina" },
-      { numero: 36, tipoAreaVerde: "Plazoleta", direccion: "José Ignacio Zenteno con Gaspar Marin" },
-      { numero: 37, tipoAreaVerde: "Plazoleta", direccion: "Arauco con Oscar Viel" },
-      { numero: 38, tipoAreaVerde: "Plazoleta", direccion: "Pje. Caffarena" },
-      { numero: 39, tipoAreaVerde: "Plazoleta", direccion: "Daniel Briceño entre Arauca y Patagona" },
-      { numero: 40, tipoAreaVerde: "Plazoleta", direccion: "José Ignacio Zenteno con Juan Enrique Rosales" },
-      { numero: 41, tipoAreaVerde: "Plazoleta", direccion: "Fray Camilo Henriquez entre Pje. Aconcagua y José Ignacio Zenteno" },
-      { numero: 42, tipoAreaVerde: "Plazoleta", direccion: "Ramon Carnicer con José Ignacio Zenteno" },
-      { numero: 43, tipoAreaVerde: "Plazoleta", direccion: "Ramon Carnicer entre José Ignacio Zenteno y Arturo Prat Chacón" },
-      { numero: 44, tipoAreaVerde: "Plazoleta", direccion: "Los Coirones con Manuel Rodriguez" },
-      { numero: 45, tipoAreaVerde: "Plazoleta", direccion: "Francisco Roux con Julio Ramirez" },
-      { numero: 46, tipoAreaVerde: "Plazoleta", direccion: "Francisco Roux entre Arturo Prat Chacón y José Ignacio Zenteno" },
-      { numero: 47, tipoAreaVerde: "Plazoleta", direccion: "C. 1 entre Comandante Bynon y Pje. Interior A" },
-      { numero: 48, tipoAreaVerde: "Plazoleta", direccion: "Comandante Bynon con Pje. Cacique Papón" },
-      { numero: 49, tipoAreaVerde: "Plazoleta", direccion: "Los Colonizadores con Alejandro Bertrand" },
-      { numero: 50, tipoAreaVerde: "Plazoleta", direccion: "Simon Bolivar entre Enrique Ibar y Tte. Rogers" },
-      { numero: 51, tipoAreaVerde: "Plaza", direccion: "Plebistero Abel Macias Gomez entre Sta. Juana y Av. Ancud" },
-      { numero: 52, tipoAreaVerde: "Plazoleta", direccion: "Los Gallardo entre Los Levill y Los Unquen" },
-      { numero: 53, tipoAreaVerde: "Plazoleta", direccion: "Los Gallardo entre Los Quinchaman y Los Uribe" },
-      { numero: 54, tipoAreaVerde: "Plazoleta", direccion: "Pje. Los Coliboro con Los Nain" },
-      { numero: 55, tipoAreaVerde: "Plazoleta", direccion: "Pje. Los Mansilla con Pje. Los Tecay" },
-      { numero: 56, tipoAreaVerde: "Plazoleta", direccion: "Pje. Los Vera" },
-      { numero: 57, tipoAreaVerde: "Plazoleta", direccion: "Pje. Los Hueicha" },
-      { numero: 58, tipoAreaVerde: "Bandejon", direccion: "Av. Canal de Chacao entre Manuel Rodriguez y Av. Castro" },
-      { numero: 59, tipoAreaVerde: "Plazoleta", direccion: "Dalcahue con Av. Castro" },
-      { numero: 60, tipoAreaVerde: "Plazoleta", direccion: "Av. Canal de Chacao entre Calle 9 y Cordillera San Pedro" },
-      { numero: 61, tipoAreaVerde: "Plazoleta", direccion: "Av. Canal de Chacao con Cordillera San Pedro" },
-      { numero: 62, tipoAreaVerde: "Plazoleta", direccion: "Cordillera San Pedro con Los Aguilar" },
-      { numero: 63, tipoAreaVerde: "Plazoleta", direccion: "C. 5" },
-      { numero: 64, tipoAreaVerde: "Plazoleta", direccion: "Patagona entre C. 3 y C. 4" },
-      { numero: 65, tipoAreaVerde: "Plazoleta", direccion: "Patagona entre Pje. 1 y Pje. 2" },
-      { numero: 66, tipoAreaVerde: "Plazoleta", direccion: "Quetalmahue con Avenida Los Pueblos Unidos" },
-      { numero: 67, tipoAreaVerde: "Plazoleta", direccion: "Patagona entre Avenida Los Pueblos Unidos y Pueblo Yagan" },
-      { numero: 68, tipoAreaVerde: "Plazoleta", direccion: "Dalcahue con Punta Árbol" },
-      { numero: 69, tipoAreaVerde: "Plazoleta", direccion: "Punta Árbol" },
-      { numero: 70, tipoAreaVerde: "Plazoleta", direccion: "Queilen con Hornopiren" },
-      { numero: 71, tipoAreaVerde: "Plazoleta", direccion: "Dalcahue con Avenida Los Pueblos Unidos" },
-      { numero: 72, tipoAreaVerde: "Plazoleta", direccion: "Dalcahue con Huicha" },
-      { numero: 73, tipoAreaVerde: "Plazoleta", direccion: "Pje. Curaco de Velez" },
-      { numero: 74, tipoAreaVerde: "Plazoleta", direccion: "Pje. Voluntario Eugenio Rodriguez" },
-      { numero: 75, tipoAreaVerde: "Plaza", direccion: "Simon Bolivar entre Pje. Enrique Villa y Luis Alberto Bravo" },
-      { numero: 76, tipoAreaVerde: "Plazoleta", direccion: "Pje. Julian Fox con Enrique Briggs" },
-      { numero: 77, tipoAreaVerde: "Plazoleta", direccion: "Simon Bolivar con Av. Pdte. Pedro Aguirre Cerda" },
-      { numero: 78, tipoAreaVerde: "Plazoleta", direccion: "Diagonal Miraflores entre Cruz Daniel Ramirez y Simon Bolivar" },
-      { numero: 79, tipoAreaVerde: "Plazoleta", direccion: "Pje. Manuel de Salas entre Av. José Martinez de Aldunate y Fernando Marquez de la Plata" },
-      { numero: 80, tipoAreaVerde: "Plazoleta", direccion: "Pje. Manuel de Salas entre Fernando Marquez de la Plata y Mateo de Toro y Zambrano" },
-      { numero: 81, tipoAreaVerde: "Plazoleta", direccion: "Pje. Manuel de Salas entre Mateo de Toro y Zambrano y Arturo Prat Chacon" },
-      { numero: 82, tipoAreaVerde: "Plazoleta", direccion: "Paula Jaraquemada entre Juan Enrique Rosales y Fray Camilo Henriquez" },
-      { numero: 83, tipoAreaVerde: "Plazoleta", direccion: "José Kramarenko con Eusebio Lillo" },
-      { numero: 84, tipoAreaVerde: "Plazoleta", direccion: "Fray Camilo Henriquez entre Eusebio Lillo y Av. Brasil" },
-      { numero: 85, tipoAreaVerde: "Plazoleta", direccion: "18 de Septiembre entre Ramon Freire y Daniel Molina" },
-      { numero: 86, tipoAreaVerde: "Plazoleta", direccion: "C. 2 Nte. con C. 1 Ote." },
-      { numero: 87, tipoAreaVerde: "Plazoleta", direccion: "Pje. 2 Pte. con Villa Mirador del Estrecho" },
-      { numero: 88, tipoAreaVerde: "Plazoleta", direccion: "Cv. Ramon Cañas Montalva con Ramon Carnicer" },
-      { numero: 89, tipoAreaVerde: "Plazoleta", direccion: "Cv. Ramon Cañas Montalva con C. 1 Ote." },
-      { numero: 90, tipoAreaVerde: "Plazoleta", direccion: "José Perich Slater entre Ramon Carnicer y Ramon Freire" },
-      { numero: 91, tipoAreaVerde: "Plazoleta", direccion: "C. Cerro Mirador con Pje. Monte Fenton" },
-      { numero: 92, tipoAreaVerde: "Plazoleta", direccion: "Golfo de Penas con Conquistadores de la Antartida" },
-      { numero: 93, tipoAreaVerde: "Plazoleta", direccion: "Conquistadores de la Antartida con Corazon de Tempano" },
-      { numero: 94, tipoAreaVerde: "Plazoleta", direccion: "Conquistadores de la Antartida con Viaje al Este" },
-    ],
-  },
+  {}
 ];
 
 
@@ -178,7 +80,18 @@ async function populateCuadrantes() {
 
 
 const BASE_INSTRUCTIONS_OPERATOR = `
-Eres el asistente experto de la empresa Áreas Verdes. Estás encargado de recepcionar mensajes desde WhatsApp para hacer registros de avance en el proceso de mantención de áreas verdes en la municipalidad de Punta Arenas.
+Eres el asistente experto de la empresa Áreas Verdes. Estás encargado de recepcionar mensajes desde WhatsApp para realizar registros y consultas relacionados con el mantenimiento de áreas verdes y programas de la municipalidad de Punta Arenas.
+
+Tu función principal es ayudar a los usuarios a:
+- Registrar nuevos **Jardines** o **Programas**.
+- Proporcionar información o consultas sobre registros existentes.
+
+Para ello, debes:
+- Interpretar las solicitudes del usuario en lenguaje natural.
+- Solicitar los datos necesarios si falta información.
+- Confirmar con el usuario antes de proceder con registros o acciones importantes.
+
+**Registro de Jardín:**
 VALIDACIONES IMPORTANTES:
 1. Cuadrantes válidos:
    - Solo existen Cuadrante 1, Cuadrante 2, Cuadrante 3 y Cuadrante 4
@@ -230,6 +143,21 @@ Interpretación: Inválido (Plaza 80 excede el límite de 76 para Cuadrante 2)
 
 Usuario: "En la plaza número tres del tercer cuadrante"
 Interpretación: Cuadrante 3, Plaza 3 (Válido)
+
+**Registro de Programa:**
+Para registrar un nuevo programa, necesitas obtener:
+- Fecha (debe obtenerla automáticamente)
+- Nombre
+- Lugar de referencia
+- Categoría
+- Imágenes (el usuario las enviará)
+
+Usa los criterios de comprensión de jardines
+**Importante:**
+- No uses expresiones regulares o coincidencias de palabras clave para determinar la intención del usuario.
+- Utiliza tus capacidades de comprensión del lenguaje natural para entender lo que el usuario solicita.
+- Si el usuario proporciona información incompleta o ambigua, solicita aclaraciones de manera cortés.
+- Mantén la funcionalidad existente y asegúrate de que las respuestas sean amigables y profesionales.
 `;
 
 const BASE_INSTRUCTIONS_ADMINISTRATOR = `
@@ -463,6 +391,7 @@ COMPRENSIÓN DE CONSULTAS TEMPORALES:
    - "esta semana" → periodoTipo: "semana"
    - "este mes" → periodoTipo: "mes"
    - "del [fecha] al [fecha]" → periodoTipo: "rango", incluir fechaInicio y fechaFin
+    - "noviembre u otro mes de 2024 u otro año" → periodoTipo: "rango", incluir fechaInicio y fechaFin
 
 2. Ejemplos de consultas:
    "¿Cuántos metros cuadrados hizo Juan ayer?"
@@ -487,7 +416,89 @@ COMPRENSIÓN DE CONSULTAS TEMPORALES:
      fechaFin: "2023-11-20",
      formatoRespuesta: "resumen"
    }
+ Eres un experto en consultas de programas registrados en la base de datos de Áreas Verdes. Tu tarea es interpretar preguntas en lenguaje natural y ejecutar consultas mediante la función \`consultarProgramas\`.
 
+    **TIPOS DE CONSULTAS:**
+
+    1. **CONSULTAS POR FECHA:**
+       Cuando el usuario pregunte por programas de una fecha específica, debes llamar a \`consultarProgramas\` con:
+       \`\`\`json
+       {
+         "tipo": "fecha",
+         "criterios": {
+           "fecha": "YYYY-MM-DD",  // Formato ISO de la fecha
+           "tipo": "dia"           // "dia" para fecha específica, "mes" para mes completo
+         }
+       }
+       \`\`\`
+
+    2. **CONSULTAS ESPECÍFICAS:**
+       Para búsquedas exactas o parciales:
+       \`\`\`json
+       {
+         "tipo": "especifica",
+         "criterios": {
+           "campo": "nombre/lugarDeReferencia/categoria",
+           "valor": "término de búsqueda",
+           "exacto": true/false
+         }
+       }
+       \`\`\`
+
+    3. **BÚSQUEDAS DE TEXTO:**
+       Para búsquedas en campos de texto:
+       \`\`\`json
+       {
+         "tipo": "texto",
+         "criterios": {
+           "palabrasClave": ["palabra1", "palabra2"],
+           "operador": "OR"/"AND"
+         }
+       }
+       \`\`\`
+
+    4. **LISTADOS:**
+       Para resúmenes o listados:
+       \`\`\`json
+       {
+         "tipo": "listado",
+         "criterio": "categoria"
+       }
+       \`\`\`
+
+    **IMPORTANTE:**
+
+    - SIEMPRE debes llamar a la función \`consultarProgramas\` con los parámetros adecuados.
+    - NO devuelvas el JSON como texto, usa la función.
+    - Para fechas, convierte el lenguaje natural a formato ISO (YYYY-MM-DD).
+    - Maneja variaciones en la forma de expresar fechas (ej: "14 de noviembre", "14/11", "noviembre 14").
+
+    **EJEMPLOS DE USO:**
+
+    Usuario: "¿Qué programas hay del 14 de noviembre?"
+    Acción: Llamar a \`consultarProgramas\`:
+    \`\`\`json
+    {
+      "tipo": "fecha",
+      "criterios": {
+        "fecha": "2024-11-14",
+        "tipo": "dia"
+      }
+    }
+    \`\`\`
+
+    Usuario: "Muestra los programas de cultura"
+    Acción: Llamar a \`consultarProgramas\`:
+    \`\`\`json
+    {
+      "tipo": "especifica",
+      "criterios": {
+        "campo": "categoria",
+        "valor": "cultura",
+        "exacto": false
+      }
+    }
+    \`\`\`
 `;
 
 
@@ -660,6 +671,89 @@ const functions = [
         }
       },
       required: ['nombreOperador', 'periodoTipo']
+    }
+  },
+  {
+    name: 'registrarPrograma',
+    description: 'Registra un nuevo programa con los datos proporcionados',
+    parameters: {
+      type: 'object',
+      properties: {
+        nombre: { type: 'string', description: 'El nombre del programa' },
+        lugarDeReferencia: { type: 'string', description: 'El lugar de referencia del programa' },
+        categoria: { type: 'string', description: 'La categoría del programa' },
+        images: { type: 'array', items: { type: 'object' }, description: 'Lista de imágenes asociadas' },
+      },
+      required: ['nombre', 'lugarDeReferencia', 'categoria'],
+    },
+  },
+  {
+    name: 'modificarRegistroPrograma',
+    description: 'Modifica los datos del registro de programa pendiente antes de confirmarlo',
+    parameters: {
+      type: 'object',
+      properties: {
+        campo: { type: 'string', description: 'El campo a modificar (nombre, lugarDeReferencia, categoria, images)' },
+        valor: { type: 'string', description: 'El nuevo valor para el campo' },
+      },
+      required: ['campo', 'valor'],
+    },
+  },
+  {
+    name: 'confirmarRegistroPrograma',
+    description: 'Confirma y guarda el registro de programa pendiente',
+    parameters: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: 'consultarProgramas',
+    description: 'Consulta programas registrados según diferentes criterios',
+    parameters: {
+      type: 'object',
+      properties: {
+        tipo: {
+          type: 'string',
+          enum: ['fecha', 'especifica', 'texto', 'listado'],
+          description: 'Tipo de consulta a realizar'
+        },
+        criterios: {
+          type: 'object',
+          properties: {
+            fecha: {
+              type: 'string',
+              description: 'Fecha en formato YYYY-MM-DD para consultas por fecha'
+            },
+            tipo: {
+              type: 'string',
+              enum: ['dia', 'mes'],
+              description: 'Tipo de consulta por fecha (día específico o mes completo)'
+            },
+            campo: {
+              type: 'string',
+              enum: ['nombre', 'lugarDeReferencia', 'categoria'],
+              description: 'Campo para consultas específicas'
+            },
+            valor: {
+              type: 'string',
+              description: 'Valor a buscar en consultas específicas'
+            },
+            palabrasClave: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Lista de palabras clave para búsqueda en texto'
+            },
+            operador: {
+              type: 'string',
+              enum: ['OR', 'AND'],
+              description: 'Operador para combinar palabras clave'
+            }
+          }
+        }
+      },
+      required: ['tipo']
     }
   }
 ];
@@ -908,66 +1002,75 @@ async function consultarMetrosCuadrados(criterios) {
 
     // Calcular fechas según el periodoTipo
     let fechaInicio, fechaFin;
-    const ahora = new Date();
+
+    if (fechaInicioParam && fechaFinParam) {
+      fechaInicio = new Date(fechaInicioParam);
+      fechaInicio.setHours(0, 0, 0, 0);
+      fechaFin = new Date(fechaFinParam);
+      fechaFin.setHours(23, 59, 59, 999);
+    } else {
+      const ahora = new Date();
     
-    switch (periodoTipo) {
-      case 'semana':
-        fechaInicio = new Date(ahora);
-        fechaInicio.setDate(ahora.getDate() - ahora.getDay());
-        fechaInicio.setHours(0, 0, 0, 0);
-
-        fechaFin = new Date(fechaInicio);
-        fechaFin.setDate(fechaInicio.getDate() + 6);
-        fechaFin.setHours(23, 59, 59, 999);
-        break;
-
-      case 'dia':
-        fechaInicio = new Date();
-        fechaInicio.setHours(0, 0, 0, 0);
-        fechaFin = new Date();
-        fechaFin.setHours(23, 59, 59, 999);
-        break;
-
-      case 'ayer':
-        fechaInicio = new Date(ahora);
-        fechaInicio.setDate(ahora.getDate() - 1);
-        fechaInicio.setHours(0, 0, 0, 0);
-        fechaFin = new Date(fechaInicio);
-        fechaFin.setHours(23, 59, 59, 999);
-        break;
-
-      case 'antesdeayer':
-        fechaInicio = new Date(ahora);
-        fechaInicio.setDate(ahora.getDate() - 2);
-        fechaInicio.setHours(0, 0, 0, 0);
-        fechaFin = new Date(fechaInicio);
-        fechaFin.setHours(23, 59, 59, 999);
-        break;
-
-      case 'mes':
-        fechaInicio = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
-        fechaInicio.setHours(0, 0, 0, 0);
-        fechaFin = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0);
-        fechaFin.setHours(23, 59, 59, 999);
-        break;
-
-      case 'rango':
-        if (fechaInicioParam && fechaFinParam) {
-          fechaInicio = new Date(fechaInicioParam);
+      switch (periodoTipo) {
+        case 'semana':
+          fechaInicio = new Date(ahora);
+          fechaInicio.setDate(ahora.getDate() - ahora.getDay());
           fechaInicio.setHours(0, 0, 0, 0);
-          fechaFin = new Date(fechaFinParam);
+  
+          fechaFin = new Date(fechaInicio);
+          fechaFin.setDate(fechaInicio.getDate() + 6);
           fechaFin.setHours(23, 59, 59, 999);
-        } else {
-          throw new Error('Para consultas por rango se requieren fechas de inicio y fin');
-        }
-        break;
-
-      default:
-        fechaInicio = new Date();
-        fechaInicio.setHours(0, 0, 0, 0);
-        fechaFin = new Date();
-        fechaFin.setHours(23, 59, 59, 999);
+          break;
+  
+        case 'dia':
+          fechaInicio = new Date();
+          fechaInicio.setHours(0, 0, 0, 0);
+          fechaFin = new Date();
+          fechaFin.setHours(23, 59, 59, 999);
+          break;
+  
+        case 'ayer':
+          fechaInicio = new Date(ahora);
+          fechaInicio.setDate(ahora.getDate() - 1);
+          fechaInicio.setHours(0, 0, 0, 0);
+          fechaFin = new Date(fechaInicio);
+          fechaFin.setHours(23, 59, 59, 999);
+          break;
+  
+        case 'antesdeayer':
+          fechaInicio = new Date(ahora);
+          fechaInicio.setDate(ahora.getDate() - 2);
+          fechaInicio.setHours(0, 0, 0, 0);
+          fechaFin = new Date(fechaInicio);
+          fechaFin.setHours(23, 59, 59, 999);
+          break;
+  
+        case 'mes':
+          fechaInicio = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+          fechaInicio.setHours(0, 0, 0, 0);
+          fechaFin = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0);
+          fechaFin.setHours(23, 59, 59, 999);
+          break;
+  
+        case 'rango':
+          if (fechaInicioParam && fechaFinParam) {
+            fechaInicio = new Date(fechaInicioParam);
+            fechaInicio.setHours(0, 0, 0, 0);
+            fechaFin = new Date(fechaFinParam);
+            fechaFin.setHours(23, 59, 59, 999);
+          } else {
+            throw new Error('Para consultas por rango se requieren fechas de inicio y fin');
+          }
+          break;
+  
+        default:
+          fechaInicio = new Date();
+          fechaInicio.setHours(0, 0, 0, 0);
+          fechaFin = new Date();
+          fechaFin.setHours(23, 59, 59, 999);
+      }
     }
+   
 
     console.log('📅 Período de búsqueda:', {
       inicio: fechaInicio.toISOString(),
@@ -1735,214 +1838,239 @@ async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
             };
           }
           break;
-          case 'listado':
-            if (functionArgs.criterio === 'cuadrante') {
-              registros = await Jardin.aggregate([
-                {
-                  $group: {
-                    _id: '$cuadrante',
-                    count: { $sum: 1 },
-                    plazas: { $addToSet: '$plaza' }
-                  }
-                },
-                { $sort: { _id: 1 } }
-              ]);
-              
-              let responseMessage = '📊 Resumen de Cuadrantes:\n\n';
-              registros.forEach(reg => {
-                responseMessage += `📍 Cuadrante ${reg._id}:\n`;
-                responseMessage += `   • ${reg.count} registros\n`;
-                responseMessage += `   • ${reg.plazas.length} espacios diferentes\n\n`;
-              });
-              
-              // Guardar en el contexto
-              const resumenContext = {
-                tipo: 'resumen',
-                datos: registros,
-                fecha: new Date().toISOString()
-              };
-              
-              conversation.push({ 
-                role: 'system', 
-                content: `Resultados de búsqueda almacenados: ${JSON.stringify(resumenContext, null, 2)}`
-              });
-              conversation.push({ role: 'assistant', content: responseMessage });
-              await guardarConversacion(numeroTelefono, { 
-                role: 'assistant', 
-                content: responseMessage,
-                metadata: resumenContext
-              });
-              
-              return { text: responseMessage, media: [], metadata: resumenContext };
-            }
-            break;
-        }
-      } else {
-        const { criterio, valor } = functionArgs;
-        
-        if (criterio === 'cuadrante') {
-          const numeroCuadrante = valor.replace(/[^0-9]/g, '');
-          mongoQuery = {
-            $or: [
-              { cuadrante: numeroCuadrante },
-              { cuadrante: `Cuadrante ${numeroCuadrante}` },
-              { cuadrante: `CUADRANTE ${numeroCuadrante}` },
-              { cuadrante: `cuadrante ${numeroCuadrante}` }
-            ]
-          };
-        } else if (criterio === 'plaza') {
-          const numeroPlaza = valor.replace(/[^0-9]/g, '');
-          mongoQuery = {
-            $or: [
-              { plaza: new RegExp(`${numeroPlaza}`, 'i') },
-              { plaza: new RegExp(`Plaza.*${numeroPlaza}`, 'i') },
-              { plaza: new RegExp(`Plazoleta.*${numeroPlaza}`, 'i') }
-            ]
-          };
-        } else if (criterio === 'observaciones' || criterio === 'tarea') {
-          mongoQuery = { observaciones: { $regex: valor, $options: 'i' } };
-        }
-      }
-  
-      if (!registros) {
-        registros = await Jardin.find(mongoQuery)
-          .sort({ createdAt: -1 })
-          .limit(50); // Limitar resultados para evitar sobrecarga
-      }
-  
-      console.log(`📊 Se encontraron ${registros.length} registros`);
-  
-      if (registros.length === 0) {
-        const noRecordsMessage = functionArgs.tipo === 'fecha' ? 
-          `No se encontraron registros para la fecha especificada.` :
-          'No se encontraron registros que coincidan con los criterios especificados.';
-        
-        conversation.push({ role: 'assistant', content: noRecordsMessage });
-        await guardarConversacion(numeroTelefono, { role: 'assistant', content: noRecordsMessage });
-        return { text: noRecordsMessage, media: [] };
-      }
-  
-      // Procesar y enriquecer resultados con información adicional
-      const registrosProcesados = await Promise.all(registros.map(async (registro) => {
-        try {
-          const cuadrante = await Cuadrante.findOne({
-            cuadrante: { $regex: new RegExp(`^(Cuadrante\\s*)?${registro.cuadrante}$`, 'i') }
-          });
-  
-          let metrosCuadrados = 0;
-          let direccionPlaza = '';
-  
-          if (cuadrante) {
-            const numeroPlaza = registro.plaza.replace(/[^0-9]/g, '');
-            const plaza = cuadrante.plazas.find(p => p.numero.toString() === numeroPlaza);
-            if (plaza) {
-              metrosCuadrados = plaza.metrosCuadrados;
-              direccionPlaza = plaza.direccion;
-            }
+
+        case 'listado':
+          if (functionArgs.criterio === 'cuadrante') {
+            registros = await Jardin.aggregate([
+              {
+                $group: {
+                  _id: '$cuadrante',
+                  count: { $sum: 1 },
+                  plazas: { $addToSet: '$plaza' }
+                }
+              },
+              { $sort: { _id: 1 } }
+            ]);
+            
+            let responseMessage = '📊 Resumen de Cuadrantes:\n\n';
+            registros.forEach(reg => {
+              responseMessage += `📍 Cuadrante ${reg._id}:\n`;
+              responseMessage += `   • ${reg.count} registros\n`;
+              responseMessage += `   • ${reg.plazas.length} espacios diferentes\n\n`;
+            });
+            
+            // Guardar en el contexto
+            const resumenContext = {
+              tipo: 'resumen',
+              datos: registros,
+              fecha: new Date().toISOString()
+            };
+            
+            conversation.push({ 
+              role: 'system', 
+              content: `Resultados de búsqueda almacenados: ${JSON.stringify(resumenContext, null, 2)}`
+            });
+            conversation.push({ role: 'assistant', content: responseMessage });
+            await guardarConversacion(numeroTelefono, { 
+              role: 'assistant', 
+              content: responseMessage,
+              metadata: resumenContext
+            });
+            
+            return { text: responseMessage, media: [], metadata: resumenContext };
           }
-  
-          return {
-            ...registro.toObject(),
-            metrosCuadrados,
-            direccion: direccionPlaza
-          };
-        } catch (error) {
-          console.error('Error procesando registro:', error);
-          return registro.toObject();
-        }
-      }));
-  
-      const resultadosContext = {
-        query: mongoQuery,
-        totalRegistros: registros.length,
-        fechaConsulta: new Date().toISOString(),
-        registros: registrosProcesados.map(r => ({
-          id: r._id.toString(),
-          cuadrante: r.cuadrante,
-          plaza: r.plaza,
-          observaciones: r.observaciones,
-          fecha: r.createdAt,
-          metrosCuadrados: r.metrosCuadrados,
-          direccion: r.direccion,
-          tieneImagenes: r.images && r.images.length > 0
-        }))
-      };
-  
-      // Construir respuesta detallada
-      let responseMessage = `📊 Resultados de la búsqueda:\n`;
-      responseMessage += `• Total de registros: ${registros.length}\n`;
-      
-      if (functionArgs.tipo === 'fecha' && startDate) {
-        responseMessage += `• Fecha de búsqueda: ${startDate.toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}\n\n`;
-      } else {
-        responseMessage += `• Cuadrantes diferentes: ${new Set(registros.map(r => r.cuadrante)).size}\n`;
-        responseMessage += `• Espacios únicos: ${new Set(registros.map(r => r.plaza)).size}\n\n`;
+          break;
       }
-  
-      // Organizar y mostrar registros detallados
-      registrosProcesados.forEach((registro, index) => {
-        responseMessage += `${index + 1}. Cuadrante ${registro.cuadrante} - ${registro.plaza}\n`;
-        if (registro.metrosCuadrados) responseMessage += `   📏 ${registro.metrosCuadrados}m²\n`;
-        if (registro.direccion) responseMessage += `   📍 ${registro.direccion}\n`;
-        responseMessage += `   📅 ${new Date(registro.createdAt).toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}\n`;
-        responseMessage += `   📝 ${registro.observaciones}\n\n`;
-      });
-  
-      // Guardar en la conversación
-      conversation.push({ 
-        role: 'system', 
-        content: `Resultados de búsqueda almacenados: ${JSON.stringify(resultadosContext, null, 2)}`
-      });
-      conversation.push({ role: 'assistant', content: responseMessage });
+    } else {
+      const { criterio, valor } = functionArgs;
       
-      await guardarConversacion(numeroTelefono, { 
-        role: 'assistant', 
-        content: responseMessage,
-        metadata: resultadosContext
-      });
-  
-      return {
-        text: responseMessage,
-        media: [],
-        metadata: {
-          ...resultadosContext,
-          ...(startDate && endDate && {
-            fechasBuscadas: {
-              inicio: startDate,
-              fin: endDate
-            }
-          })
-        }
-      };
-  
-    } catch (error) {
-      console.error('❌ Error en consultarRegistros:', error);
-      const errorMessage = `Error al procesar la consulta: ${error.message}\n` +
-                          'Por favor, intente reformular su consulta o contacte al soporte técnico.';
-      
-      conversation.push({ role: 'assistant', content: errorMessage });
-      await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
-      
-      return {
-        text: errorMessage,
-        media: [],
-        metadata: {
-          error: true,
-          errorType: error.name,
-          errorMessage: error.message,
-          fechaError: new Date().toISOString()
-        }
-      };
+      if (criterio === 'cuadrante') {
+        const numeroCuadrante = valor.replace(/[^0-9]/g, '');
+        mongoQuery = {
+          $or: [
+            { cuadrante: numeroCuadrante },
+            { cuadrante: `Cuadrante ${numeroCuadrante}` },
+            { cuadrante: `CUADRANTE ${numeroCuadrante}` },
+            { cuadrante: `cuadrante ${numeroCuadrante}` }
+          ]
+        };
+      } else if (criterio === 'plaza') {
+        const numeroPlaza = valor.replace(/[^0-9]/g, '');
+        mongoQuery = {
+          $or: [
+            { plaza: new RegExp(`${numeroPlaza}`, 'i') },
+            { plaza: new RegExp(`Plaza.*${numeroPlaza}`, 'i') },
+            { plaza: new RegExp(`Plazoleta.*${numeroPlaza}`, 'i') }
+          ]
+        };
+      } else if (criterio === 'observaciones' || criterio === 'tarea') {
+        mongoQuery = { observaciones: { $regex: valor, $options: 'i' } };
+      }
     }
+
+    if (!registros) {
+      registros = await Jardin.find(mongoQuery)
+        .sort({ createdAt: -1 })
+        .limit(50); // Limitar resultados para evitar sobrecarga
+    }
+
+    console.log(`📊 Se encontraron ${registros.length} registros`);
+
+    if (registros.length === 0) {
+      const noRecordsMessage = functionArgs.tipo === 'fecha' ? 
+        `No se encontraron registros para la fecha especificada.` :
+        'No se encontraron registros que coincidan con los criterios especificados.';
+      
+      conversation.push({ role: 'assistant', content: noRecordsMessage });
+      await guardarConversacion(numeroTelefono, { role: 'assistant', content: noRecordsMessage });
+      return { text: noRecordsMessage, media: [] };
+    }
+
+    // Procesar y enriquecer resultados con información adicional
+    const registrosProcesados = await Promise.all(registros.map(async (registro) => {
+      try {
+        const cuadrante = await Cuadrante.findOne({
+          cuadrante: { $regex: new RegExp(`^(Cuadrante\\s*)?${registro.cuadrante}$`, 'i') }
+        });
+
+        let metrosCuadrados = 0;
+        let direccionPlaza = '';
+
+        if (cuadrante) {
+          const numeroPlaza = registro.plaza.replace(/[^0-9]/g, '');
+          const plaza = cuadrante.plazas.find(p => p.numero.toString() === numeroPlaza);
+          if (plaza) {
+            metrosCuadrados = plaza.metrosCuadrados;
+            direccionPlaza = plaza.direccion;
+          }
+        }
+
+        return {
+          ...registro.toObject(),
+          metrosCuadrados,
+          direccion: direccionPlaza,
+          images: registro.images || []
+        };
+      } catch (error) {
+        console.error('Error procesando registro:', error);
+        return registro.toObject();
+      }
+    }));
+
+    const resultadosContext = {
+      query: mongoQuery,
+      totalRegistros: registros.length,
+      fechaConsulta: new Date().toISOString(),
+      registros: registrosProcesados.map(r => ({
+        id: r._id.toString(),
+        cuadrante: r.cuadrante,
+        plaza: r.plaza,
+        observaciones: r.observaciones,
+        fecha: r.createdAt,
+        metrosCuadrados: r.metrosCuadrados,
+        direccion: r.direccion,
+        tieneImagenes: r.images && r.images.length > 0
+      }))
+    };
+
+    // Construir respuesta detallada
+    let responseMessage = `📊 Resultados de la búsqueda:\n`;
+    responseMessage += `• Total de registros: ${registros.length}\n`;
+    
+    if (functionArgs.tipo === 'fecha' && startDate) {
+      responseMessage += `• Fecha de búsqueda: ${startDate.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}\n\n`;
+    } else {
+      responseMessage += `• Cuadrantes diferentes: ${new Set(registros.map(r => r.cuadrante)).size}\n`;
+      responseMessage += `• Espacios únicos: ${new Set(registros.map(r => r.plaza)).size}\n\n`;
+    }
+
+    // Organizar y mostrar registros detallados
+    registrosProcesados.forEach((registro, index) => {
+      responseMessage += `${index + 1}. Cuadrante ${registro.cuadrante} - ${registro.plaza}\n`;
+      if (registro.metrosCuadrados) responseMessage += `   📏 ${registro.metrosCuadrados}m²\n`;
+      if (registro.direccion) responseMessage += `   📍 ${registro.direccion}\n`;
+      responseMessage += `   📅 ${new Date(registro.createdAt).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}\n`;
+      responseMessage += `   📝 ${registro.observaciones}\n\n`;
+    });
+
+    // Recopilar imágenes para enviar
+    let media = [];
+    const maxTotalImages = 10; // Limitar el número total de imágenes a enviar
+
+    for (const registro of registrosProcesados) {
+      if (media.length >= maxTotalImages) break;
+
+      if (registro.images && registro.images.length > 0) {
+        // Limitar el número de imágenes por registro si es necesario
+        const imagesToSend = registro.images.slice(0, maxTotalImages - media.length);
+
+        for (const image of imagesToSend) {
+          media.push({
+            data: image.data,
+            mimeType: image.contentType || 'image/jpeg',
+          });
+
+          if (media.length >= maxTotalImages) break;
+        }
+      }
+    }
+
+    // Guardar en la conversación
+    conversation.push({ 
+      role: 'system', 
+      content: `Resultados de búsqueda almacenados: ${JSON.stringify(resultadosContext, null, 2)}`
+    });
+    conversation.push({ role: 'assistant', content: responseMessage });
+    
+    await guardarConversacion(numeroTelefono, { 
+      role: 'assistant', 
+      content: responseMessage,
+      metadata: resultadosContext
+    });
+
+    return {
+      text: responseMessage,
+      media: media,
+      metadata: {
+        ...resultadosContext,
+        ...(startDate && endDate && {
+          fechasBuscadas: {
+            inicio: startDate,
+            fin: endDate
+          }
+        })
+      }
+    };
+
+  } catch (error) {
+    console.error('❌ Error en consultarRegistros:', error);
+    const errorMessage = `Error al procesar la consulta: ${error.message}\n` +
+                        'Por favor, intente reformular su consulta o contacte al soporte técnico.';
+    
+    conversation.push({ role: 'assistant', content: errorMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
+    
+    return {
+      text: errorMessage,
+      media: [],
+      metadata: {
+        error: true,
+        errorType: error.name,
+        errorMessage: error.message,
+        fechaError: new Date().toISOString()
+      }
+    };
   }
+}
+
   
 
 
@@ -2080,14 +2208,31 @@ async function getLLMResponse(chatId, userMessage, numeroTelefono, userType) {
         images: [],
       };
 
-      const sanitizedData = {
-        ...pendingData,
-        images: pendingData.images.map((img, index) => ({
-          index: index + 1,
-          contentType: img.contentType,
-        })),
-      };
-
+      let sanitizedData ;
+      const { images, ...restOfPendingData } = pendingData; 
+      if (pendingData.cuadrante || pendingData.plaza || pendingData.observaciones) {
+        // Registro pendiente de Jardín
+        sanitizedData = {
+          tipoRegistro: 'jardin',
+          ...restOfPendingData,
+          images: pendingData.images.map((img, index) => ({
+            index: index + 1,
+            contentType: img.contentType,
+          })),
+        };
+      } else if (pendingData.nombre || pendingData.lugarDeReferencia || pendingData.categoria) {
+        // Registro pendiente de Programa
+        sanitizedData = {
+          tipoRegistro: 'programa',
+          ...restOfPendingData,
+          images: images.map((img, index) => ({
+            index: index + 1,
+            contentType: img.contentType,
+          })),
+        };
+      } else {
+        sanitizedData = restOfPendingData;
+      }
       messages.push({
         role: 'system',
         content: `Datos del registro pendiente:\n${JSON.stringify(sanitizedData, null, 2)}`,
@@ -2127,7 +2272,14 @@ ${previousResults
         model: 'gpt-4o',
         messages,
         functions: functions.filter((func) => 
-          ['registrarJardin', 'modificarRegistro', 'confirmarRegistro'].includes(func.name)
+          [
+            'registrarJardin', 
+            'modificarRegistro', 
+            'confirmarRegistro',
+            'registrarPrograma',
+            'modificarRegistroPrograma',
+            'confirmarRegistroPrograma'
+          ].includes(func.name)
         ),
         function_call: 'auto',
         temperature: 0.7,
@@ -2159,7 +2311,8 @@ ${previousResults
 
       // Verificar permisos para operadores
       if (userType === 'operator' && 
-          !['registrarJardin', 'modificarRegistro', 'confirmarRegistro'].includes(functionName)) {
+        !['registrarJardin', 'modificarRegistro', 'confirmarRegistro',
+          'registrarPrograma', 'modificarRegistroPrograma', 'confirmarRegistroPrograma'].includes(functionName)) {
         const notAuthorizedMessage = 'Lo siento, no tienes permiso para realizar esta acción.';
         conversation.push({ role: 'assistant', content: notAuthorizedMessage });
         await guardarConversacion(numeroTelefono, { role: 'assistant', content: notAuthorizedMessage });
@@ -2575,6 +2728,360 @@ async function modifyPendingRegistration(chatId, functionArgs, conversation, num
     return { text: errorMessage, media: [] };
   }
 }
+async function registrarPrograma(chatId, functionArgs, conversation, numeroTelefono) {
+  let pendingPrograma = pendingRegistrations.get(chatId) || {
+    nombre: '',
+    lugarDeReferencia: '',
+    categoria: '',
+    fecha: new Date(), // Añade esta línea si deseas establecer la fecha aquí
+    images: [],
+    createdAt: new Date()
+  };
+
+  // Actualizar datos pendientes con los argumentos proporcionados
+  pendingPrograma = {
+    ...pendingPrograma,
+    ...functionArgs,
+    lastUpdated: new Date(),
+  };
+
+  // Preservar imágenes existentes si no se proporcionan nuevas
+  if (functionArgs.images) {
+    delete functionArgs.images;
+  }
+
+  pendingRegistrations.set(chatId, pendingPrograma);
+
+  // Preparar mensaje de confirmación
+  const confirmationRequest =
+    '📋 Información del programa registrada:\n\n' +
+    `🎭 Nombre: ${pendingPrograma.nombre || '❌ Pendiente'}\n` +
+    `📍 Lugar de Referencia: ${pendingPrograma.lugarDeReferencia || '❌ Pendiente'}\n` +
+    `🗂️ Categoría: ${pendingPrograma.categoria || '❌ Pendiente'}\n` +
+    `📸 Imágenes: ${pendingPrograma.images.length} adjuntadas\n\n` +
+    (isProgramaRegistroCompleto(pendingPrograma)
+      ? '✅ Todos los datos necesarios están completos. Puedes confirmar el registro.'
+      : '⚠️ Aún faltan datos por completar. Por favor, proporciona la información faltante.');
+
+  // Actualizar conversación
+  conversation.push({ role: 'assistant', content: confirmationRequest });
+  await guardarConversacion(numeroTelefono, { role: 'assistant', content: confirmationRequest });
+
+  return { text: confirmationRequest, media: [] };
+}
+
+async function modifyPendingProgramaRegistration(chatId, functionArgs, conversation, numeroTelefono) {
+  const pendingPrograma = pendingRegistrations.get(chatId) || {
+    nombre: '',
+    lugarDeReferencia: '',
+    categoria: '',
+    images: [],
+  };
+  const campo = functionArgs.campo.toLowerCase();
+  const valor = functionArgs.valor;
+
+  if (['nombre', 'lugarDeReferencia', 'categoria'].includes(campo)) {
+    pendingPrograma[campo] = valor;
+    pendingRegistrations.set(chatId, pendingPrograma);
+
+    const modificationMessage = `El campo "${campo}" ha sido actualizado a: ${valor}.\n\n` +
+      `Datos actuales del registro de programa:\n` +
+      `🎭 Nombre: ${pendingPrograma.nombre}\n` +
+      `📍 Lugar de Referencia: ${pendingPrograma.lugarDeReferencia}\n` +
+      `🗂️ Categoría: ${pendingPrograma.categoria}\n` +
+      `📸 Imágenes adjuntadas: ${pendingPrograma.images.length}\n\n` +
+      `¿Deseas confirmar este registro?`;
+
+    conversation.push({ role: 'assistant', content: modificationMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: modificationMessage });
+
+    return { text: modificationMessage, media: [] };
+  } else if (campo === 'images') {
+    // Manejo de imágenes
+    // ...
+  } else {
+    const errorMessage = `El campo "${campo}" no es válido para el registro de programa.`;
+    conversation.push({ role: 'assistant', content: errorMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
+
+    return { text: errorMessage, media: [] };
+  }
+}
+async function confirmarRegistroPrograma(chatId, numeroTelefono, conversation) {
+  try {
+    // Verificar registro pendiente de programa
+    if (!pendingRegistrations.has(chatId)) {
+      const message = 'No hay un registro de programa pendiente para confirmar.';
+      conversation.push({ role: 'assistant', content: message });
+      await guardarConversacion(numeroTelefono, { role: 'assistant', content: message });
+      await sendWhapiRequest('messages/text', { to: chatId, body: message });
+      return null;
+    }
+
+    const pendingData = pendingRegistrations.get(chatId);
+
+    // Validar campos requeridos
+    const camposFaltantes = [];
+    if (!pendingData.nombre) camposFaltantes.push('Nombre');
+    if (!pendingData.lugarDeReferencia) camposFaltantes.push('Lugar de Referencia');
+    if (!pendingData.categoria) camposFaltantes.push('Categoría');
+    if (!pendingData.images || pendingData.images.length === 0) camposFaltantes.push('Imágenes');
+
+    if (camposFaltantes.length > 0) {
+      const validationMessage = `Faltan datos obligatorios:\n${camposFaltantes.map(campo => `- ${campo}`).join('\n')}`;
+      conversation.push({ role: 'assistant', content: validationMessage });
+      await guardarConversacion(numeroTelefono, { role: 'assistant', content: validationMessage });
+      await sendWhapiRequest('messages/text', { to: chatId, body: validationMessage });
+      return null;
+    }
+
+    // Guardar en MongoDB
+    const { registrarProgramaDesdeChat } = require('./controllers/programaController');
+    const programaGuardado = await registrarProgramaDesdeChat(chatId, {
+      ...pendingData,
+      numeroTelefono,
+      createdAt: new Date(),
+      fecha: new Date()
+    });
+
+    // Preparar mensaje de confirmación
+    const confirmationMessage =
+      '✅ ¡Registro de programa guardado exitosamente!\n\n' +
+      'Detalles:\n' +
+      `🎭 Nombre: ${pendingData.nombre}\n` +
+      `📍 Lugar de Referencia: ${pendingData.lugarDeReferencia}\n` +
+      `🗂️ Categoría: ${pendingData.categoria}\n` +
+      `📸 Imágenes: ${pendingData.images.length}\n\n` +
+      '📊 Guardado en la base de datos.';
+
+    conversation.push({ role: 'assistant', content: confirmationMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: confirmationMessage });
+    await sendWhapiRequest('messages/text', { to: chatId, body: confirmationMessage });
+
+    // Limpiar registro pendiente
+    pendingRegistrations.delete(chatId);
+
+    return null;
+  } catch (error) {
+    console.error('Error al confirmar registro de programa:', error);
+    const errorMessage = '⚠️ Error al guardar el registro de programa. Por favor, inténtalo nuevamente.';
+    conversation.push({ role: 'assistant', content: errorMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
+    await sendWhapiRequest('messages/text', { to: chatId, body: errorMessage });
+    return null;
+  }
+}
+
+function isProgramaRegistroCompleto(registro) {
+  return (
+    registro.nombre &&
+    registro.lugarDeReferencia &&
+    registro.categoria &&
+    registro.images &&
+    registro.images.length > 0
+  );
+}
+async function consultarProgramas(functionArgs, conversation, numeroTelefono) {
+  try {
+    console.log('Procesando consulta de programas con argumentos:', functionArgs);
+    let mongoQuery = {};
+    let programas;
+    let startDate, endDate;
+
+    // Verificar permisos del usuario
+    if (!administratorNumbers.includes(numeroTelefono)) {
+      const noPermissionsMessage = '🚫 No tienes permisos para consultar programas.';
+      conversation.push({ role: 'assistant', content: noPermissionsMessage });
+      await guardarConversacion(numeroTelefono, { role: 'assistant', content: noPermissionsMessage });
+      return { text: noPermissionsMessage, media: [] };
+    }
+
+    // Construir la consulta según el tipo
+    if (functionArgs.tipo) {
+      switch (functionArgs.tipo) {
+        case 'fecha':
+          const { fecha, tipo } = functionArgs.criterios;
+          
+          if (tipo === 'dia') {
+            startDate = new Date(fecha);
+            startDate.setUTCHours(0, 0, 0, 0);
+            endDate = new Date(fecha);
+            endDate.setUTCHours(23, 59, 59, 999);
+          } else if (tipo === 'mes') {
+            const [year, month] = fecha.split('-');
+            startDate = new Date(Date.UTC(parseInt(year), parseInt(month) - 1, 1));
+            endDate = new Date(Date.UTC(parseInt(year), parseInt(month), 0, 23, 59, 59, 999));
+          }
+
+          mongoQuery = {
+            fecha: {
+              $gte: startDate,
+              $lte: endDate
+            }
+          };
+          break;
+
+        case 'especifica':
+          const { campo, valor, exacto } = functionArgs.criterios;
+
+          if (exacto) {
+            mongoQuery[campo] = valor;
+          } else {
+            mongoQuery[campo] = { 
+              $regex: valor,
+              $options: 'i'
+            };
+          }
+          break;
+
+        case 'texto':
+          const { palabrasClave, operador } = functionArgs.criterios;
+
+          const patterns = palabrasClave.map(palabra => 
+            new RegExp(palabra.split(' ').join('.*'), 'i')
+          );
+
+          if (operador === 'OR') {
+            mongoQuery.$or = patterns.map(p => ({ nombre: { $regex: p } }));
+          } else { // AND
+            mongoQuery.$and = patterns.map(p => ({ nombre: { $regex: p } }));
+          }
+          break;
+
+        case 'listado':
+          if (functionArgs.criterio === 'categoria') {
+            programas = await Programa.aggregate([
+              {
+                $group: {
+                  _id: '$categoria',
+                  count: { $sum: 1 },
+                  programas: { $addToSet: '$nombre' }
+                }
+              },
+              { $sort: { _id: 1 } }
+            ]);
+            
+            let responseMessage = '📊 Resumen de Categorías:\n\n';
+            programas.forEach(reg => {
+              responseMessage += `📂 Categoría ${reg._id}:\n`;
+              responseMessage += `   • ${reg.count} programas\n`;
+              responseMessage += `   • Programas: ${reg.programas.join(', ')}\n\n`;
+            });
+            
+            // Guardar en el contexto
+            const resumenContext = {
+              tipo: 'resumen',
+              datos: programas,
+              fecha: new Date().toISOString()
+            };
+            
+            conversation.push({ 
+              role: 'system', 
+              content: `Resultados de búsqueda almacenados: ${JSON.stringify(resumenContext, null, 2)}`
+            });
+            conversation.push({ role: 'assistant', content: responseMessage });
+            await guardarConversacion(numeroTelefono, { 
+              role: 'assistant', 
+              content: responseMessage,
+              metadata: resumenContext
+            });
+            
+            return { text: responseMessage, media: [], metadata: resumenContext };
+          }
+          break;
+
+        default:
+          throw new Error('Tipo de consulta no soportado');
+      }
+    }
+
+    if (!programas) {
+      programas = await Programa.find(mongoQuery)
+        .sort({ fecha: -1 })
+        .limit(50); // Limitar resultados para evitar sobrecarga
+    }
+
+    console.log(`📊 Se encontraron ${programas.length} programas`);
+
+    if (programas.length === 0) {
+      const noRecordsMessage = functionArgs.tipo === 'fecha' ? 
+        `No se encontraron programas para la fecha especificada.` :
+        'No se encontraron programas que coincidan con los criterios especificados.';
+      
+      conversation.push({ role: 'assistant', content: noRecordsMessage });
+      await guardarConversacion(numeroTelefono, { role: 'assistant', content: noRecordsMessage });
+      return { text: noRecordsMessage, media: [] };
+    }
+
+    // Procesar y enriquecer resultados
+    const programasProcesados = programas.map(programa => ({
+      ...programa.toObject(),
+      images: programa.images || []
+    }));
+
+    // Construir respuesta
+    let responseMessage = `📊 Resultados de la búsqueda:\n`;
+    responseMessage += `• Total de programas: ${programas.length}\n\n`;
+
+    programasProcesados.forEach((programa, index) => {
+      responseMessage += `${index + 1}. ${programa.nombre}\n`;
+      responseMessage += `   📍 Lugar: ${programa.lugarDeReferencia}\n`;
+      responseMessage += `   📂 Categoría: ${programa.categoria}\n`;
+      responseMessage += `   📅 Fecha: ${new Date(programa.fecha).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}\n`;
+      responseMessage += `   📸 Imágenes: ${programa.images.length}\n\n`;
+    });
+
+    // Guardar en la conversación
+    conversation.push({ 
+      role: 'assistant', 
+      content: responseMessage
+    });
+    await guardarConversacion(numeroTelefono, { 
+      role: 'assistant', 
+      content: responseMessage,
+      metadata: {
+        query: mongoQuery,
+        totalProgramas: programas.length,
+        fechaConsulta: new Date().toISOString(),
+        programas: programasProcesados
+      }
+    });
+
+    return {
+      text: responseMessage,
+      media: [],
+      metadata: {
+        query: mongoQuery,
+        totalProgramas: programas.length,
+        fechaConsulta: new Date().toISOString(),
+        programas: programasProcesados
+      }
+    };
+
+  } catch (error) {
+    console.error('❌ Error en consultarProgramas:', error);
+    const errorMessage = `Error al procesar la consulta: ${error.message}\n` +
+                        'Por favor, intente reformular su consulta o contacte al soporte técnico.';
+    
+    conversation.push({ role: 'assistant', content: errorMessage });
+    await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
+    
+    return {
+      text: errorMessage,
+      media: [],
+      metadata: {
+        error: true,
+        errorType: error.name,
+        errorMessage: error.message,
+        fechaError: new Date().toISOString()
+      }
+    };
+  }
+}
 
 async function handleFunctionCall(chatId, functionName, functionArgs, conversation, numeroTelefono) {
   try {
@@ -2663,10 +3170,10 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
           const notAuthorizedMessage = '🚫 No tienes permisos para realizar esta consulta.';
           conversation.push({ role: 'assistant', content: notAuthorizedMessage });
           await guardarConversacion(numeroTelefono, { role: 'assistant', content: notAuthorizedMessage });
-          return { text: notAuthorizedMessage, media: [] };
+          return { text: notAuthorizedMessage, media: resultado.media };
         }
         return await consultarRegistros(functionArgs, conversation, numeroTelefono);
-        case 'consultarMetrosCuadrados':
+      case 'consultarMetrosCuadrados':
           if (!administratorNumbers.includes(numeroTelefono)) {
             const notAuthorizedMessage = '🚫 No tienes permisos para consultar metros cuadrados.';
             conversation.push({ role: 'assistant', content: notAuthorizedMessage });
@@ -2740,7 +3247,21 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
             };
           }
           break;
-      default:
+          case 'registrarPrograma':
+            return await registrarPrograma(chatId, functionArgs, conversation, numeroTelefono);
+          case 'modificarRegistroPrograma':
+            return await modifyPendingProgramaRegistration(chatId, functionArgs, conversation, numeroTelefono);
+          case 'confirmarRegistroPrograma':
+            return await confirmarRegistroPrograma(chatId, numeroTelefono, conversation);
+            case 'consultarProgramas':
+              if (!administratorNumbers.includes(numeroTelefono)) {
+                const notAuthorizedMessage = '🚫 No tienes permisos para consultar programas.';
+                conversation.push({ role: 'assistant', content: notAuthorizedMessage });
+                await guardarConversacion(numeroTelefono, { role: 'assistant', content: notAuthorizedMessage });
+                return { text: notAuthorizedMessage, media: [] };
+              }
+              return await consultarProgramas(functionArgs, conversation, numeroTelefono);
+            default:
         const unsupportedMessage = '❌ Función no soportada: ' + functionName;
         conversation.push({ role: 'assistant', content: unsupportedMessage });
         await guardarConversacion(numeroTelefono, { role: 'assistant', content: unsupportedMessage });
