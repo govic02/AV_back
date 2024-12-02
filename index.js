@@ -20,7 +20,7 @@ const Cuadrante = require('./models/Cuadrante'); // Ajusta la ruta según tu est
 const Programa = require('./models/Programa');
 const UsuariosTelefono = require('./models/UsuariosTelefono');
 process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
+  ////console.error('Unhandled Rejection:', err);
 });
 
 const openai = new OpenAI({
@@ -33,7 +33,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log('Conectado a MongoDB');
+    ////console.log('Conectado a MongoDB');
     return ;
   })
   .catch((err) => console.error('Error al conectar a MongoDB:', err));
@@ -54,7 +54,7 @@ const cuadrantesData = [
 
 async function populateCuadrantes() {
   try {
-    console.log('🔄 Iniciando la inicialización de cuadrantes...');
+    ////console.log('🔄 Iniciando la inicialización de cuadrantes...');
 
     for (const data of cuadrantesData) {
       const cuadranteExistente = await Cuadrante.findOne({ cuadrante: data.cuadrante });
@@ -63,18 +63,18 @@ async function populateCuadrantes() {
         // Crear un nuevo cuadrante si no existe
         const nuevoCuadrante = new Cuadrante(data);
         await nuevoCuadrante.save();
-        console.log(`✅ ${data.cuadrante} creado con las plazas asociadas.`);
+        ////console.log(`✅ ${data.cuadrante} creado con las plazas asociadas.`);
       } else {
         // Actualizar las plazas del cuadrante existente
         cuadranteExistente.plazas = data.plazas;
         await cuadranteExistente.save();
-        console.log(`📝 ${data.cuadrante} actualizado con nuevas plazas.`);
+        ////console.log(`📝 ${data.cuadrante} actualizado con nuevas plazas.`);
       }
     }
 
-    console.log('✅ Inicialización de cuadrantes completada.');
+    ////console.log('✅ Inicialización de cuadrantes completada.');
   } catch (error) {
-    console.error('❌ Error al inicializar cuadrantes:', error);
+    ////console.error('❌ Error al inicializar cuadrantes:', error);
   }
 }
 
@@ -524,7 +524,7 @@ async function inicializarUsuarios() {
       if (!usuarioExistente) {
         // Crear nuevo usuario si no existe
         await UsuariosTelefono.create(usuario);
-        console.log(`✅ Usuario creado: ${usuario.nombre} (${usuario.numeroTelefono})`);
+        ////console.log(`✅ Usuario creado: ${usuario.nombre} (${usuario.numeroTelefono})`);
       } else {
         // Actualizar usuario existente
         await UsuariosTelefono.findOneAndUpdate(
@@ -532,11 +532,11 @@ async function inicializarUsuarios() {
           usuario,
           { new: true }
         );
-        console.log(`📝 Usuario actualizado: ${usuario.nombre} (${usuario.numeroTelefono})`);
+        ////console.log(`📝 Usuario actualizado: ${usuario.nombre} (${usuario.numeroTelefono})`);
       }
     }
 
-    console.log('✅ Inicialización de usuarios completada');
+    ////console.log('✅ Inicialización de usuarios completada');
 
     // Actualizar arrays de operadores y administradores
     const operadores = await UsuariosTelefono.find({ rol: 'operator', activo: true });
@@ -549,11 +549,11 @@ async function inicializarUsuarios() {
     operatorNumbers.push(...operadores.map(op => op.numeroTelefono));
     administratorNumbers.push(...administradores.map(admin => admin.numeroTelefono));
 
-    console.log('📱 Números de operadores:', operatorNumbers);
-    console.log('👑 Números de administradores:', administratorNumbers);
+    ////console.log('📱 Números de operadores:', operatorNumbers);
+    ////console.log('👑 Números de administradores:', administratorNumbers);
 
   } catch (error) {
-    console.error('❌ Error al inicializar usuarios:', error);
+    ////console.error('❌ Error al inicializar usuarios:', error);
   }
 }
 
@@ -767,9 +767,9 @@ async function sendImage(chatId, base64Image, mimeType = 'image/jpeg', width = 1
       height: 100, 
       caption: caption
     });
-    console.log('Imagen enviada con éxito:', response.data);
+    ////console.log('Imagen enviada con éxito:', response.data);
   } catch (error) {
-    console.error('Error al enviar imagen:', error.message, error.data);
+    ////console.error('Error al enviar imagen:', error.message, error.data);
   }
 }
 async function getMondayColumnIds() {
@@ -785,16 +785,16 @@ async function getMondayColumnIds() {
     }`;
 
     const response = await mondaySdk.api(query);
-    console.log('📊 Estructura de columnas:', response.data.boards[0].columns);
+    ////console.log('📊 Estructura de columnas:', response.data.boards[0].columns);
     return response.data.boards[0].columns;
   } catch (error) {
-    console.error('❌ Error al obtener IDs de columnas:', error);
+    ////console.error('❌ Error al obtener IDs de columnas:', error);
     throw error;
   }
 }
 async function createMondayItem(data) {
   try {
-    console.log('📝 Creando ítem en Monday.com:', data);
+    ////console.log('📝 Creando ítem en Monday.com:', data);
     
     // 1. Validar datos de entrada
     if (!data.cuadrante || !data.plaza || !data.observaciones || !data.numeroTelefono) {
@@ -806,13 +806,13 @@ async function createMondayItem(data) {
       const usuario = await UsuariosTelefono.findOne({ numeroTelefono: data.numeroTelefono });
       if (usuario && usuario.nombre) {
         data.nombreUsuario = usuario.nombre;
-        console.log(`🔍 Usuario encontrado: ${data.nombreUsuario}`);
+        ////console.log(`🔍 Usuario encontrado: ${data.nombreUsuario}`);
       } else {
         data.nombreUsuario = 'Usuario no registrado';
-        console.warn(`⚠️ No se encontró un usuario válido para el número: ${data.numeroTelefono}`);
+        ////console.warn(`⚠️ No se encontró un usuario válido para el número: ${data.numeroTelefono}`);
       }
     } catch (userError) {
-      console.error('❌ Error al buscar usuario:', userError);
+      ////console.error('❌ Error al buscar usuario:', userError);
       data.nombreUsuario = 'Error al buscar usuario';
     }
 
@@ -821,7 +821,7 @@ async function createMondayItem(data) {
 
     // 4. Crear ítem base en Monday.com
     const itemName = `Mantención ${data.plaza} - ${data.nombreUsuario}`;
-    console.log('🔄 Creando ítem base con itemName:', itemName);
+    ////console.log('🔄 Creando ítem base con itemName:', itemName);
     
     const createMutation = `mutation($boardId: ID!, $itemName: String!) {
       create_item(
@@ -844,7 +844,7 @@ async function createMondayItem(data) {
     }
 
     const itemId = createResponse.data.create_item.id;
-    console.log('✅ Ítem base creado:', itemId);
+    ////console.log('✅ Ítem base creado:', itemId);
 
     // 5. Definir actualizaciones de columnas con formato correcto
     const columnUpdates = [
@@ -880,7 +880,7 @@ async function createMondayItem(data) {
     ];
 
     // 6. Actualizar cada columna
-    console.log('🔄 Actualizando columnas...');
+    ////console.log('🔄 Actualizando columnas...');
     
     for (const update of columnUpdates) {
       const updateMutation = `mutation($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
@@ -901,19 +901,19 @@ async function createMondayItem(data) {
         value: update.value
       };
 
-      console.log(`📝 Actualizando columna ${update.columnId}:`, update.value);
+      ////console.log(`📝 Actualizando columna ${update.columnId}:`, update.value);
       
       const updateResponse = await mondaySdk.api(updateMutation, { variables: updateVariables });
       if (updateResponse.errors) {
-        console.error(`⚠️ Error en columna ${update.columnId}:`, updateResponse.errors);
+        ////console.error(`⚠️ Error en columna ${update.columnId}:`, updateResponse.errors);
       } else {
-        console.log(`✅ Columna ${update.columnId} actualizada`);
+        ////console.log(`✅ Columna ${update.columnId} actualizada`);
       }
     }
 
     // 7. Subir imágenes si existen
     if (data.images && data.images.length > 0) {
-      console.log('📸 Procesando imágenes...');
+      ////console.log('📸 Procesando imágenes...');
       for (const image of data.images) {
         try {
           const fileUploadMutation = `mutation($file: File!) {
@@ -930,16 +930,16 @@ async function createMondayItem(data) {
             file: image
           };
 
-          console.log('🔄 Subiendo imagen...');
+          ////console.log('🔄 Subiendo imagen...');
           const fileUploadResponse = await mondaySdk.api(fileUploadMutation, { variables: fileUploadVariables });
           
           if (fileUploadResponse.errors) {
-            console.error('⚠️ Error al subir imagen:', fileUploadResponse.errors);
+            ////console.error('⚠️ Error al subir imagen:', fileUploadResponse.errors);
           } else {
-            console.log('✅ Imagen subida exitosamente');
+            ////console.log('✅ Imagen subida exitosamente');
           }
         } catch (imageError) {
-          console.error('❌ Error al procesar imagen:', imageError);
+          ////console.error('❌ Error al procesar imagen:', imageError);
         }
       }
     }
@@ -957,18 +957,18 @@ async function createMondayItem(data) {
     }`;
 
     const verification = await mondaySdk.api(verifyQuery);
-    console.log('🔍 Verificación final:', JSON.stringify(verification, null, 2));
+    ////console.log('🔍 Verificación final:', JSON.stringify(verification, null, 2));
 
     // 9. Registrar en logs
-    console.log('📋 Registro completo:', {
-      itemId,
-      usuario: data.nombreUsuario,
-      telefono: data.numeroTelefono,
-      plaza: data.plaza,
-      cuadrante: data.cuadrante,
-      fecha: data.fecha || new Date().toISOString(),
-      imagenesProcesadas: data.images ? data.images.length : 0
-    });
+    ////console.log('📋 Registro completo:', {
+   //   itemId,
+    //  usuario: data.nombreUsuario,
+   //   telefono: data.numeroTelefono,
+   //   plaza: data.plaza,
+    //  cuadrante: data.cuadrante,
+    //  fecha: data.fecha || new Date().toISOString(),
+   //   imagenesProcesadas: data.images ? data.images.length : 0
+    //});
 
     // 10. Retornar resultado
     return {
@@ -988,8 +988,8 @@ async function createMondayItem(data) {
     };
 
   } catch (error) {
-    console.error('❌ Error en createMondayItem:', error);
-    console.error('Stack:', error.stack);
+    ////console.error('❌ Error en createMondayItem:', error);
+    ////console.error('Stack:', error.stack);
     throw new Error(`Error al crear ítem en Monday: ${error.message}`);
   }
 }
@@ -997,8 +997,8 @@ async function consultarMetrosCuadrados(criterios) {
   try {
     const { nombreOperador, periodoTipo, formatoRespuesta, fechaInicio: fechaInicioParam, fechaFin: fechaFinParam } = criterios;
     
-    console.log('🔍 Buscando operador:', nombreOperador);
-    console.log('📅 Tipo de período:', periodoTipo);
+    ////console.log('🔍 Buscando operador:', nombreOperador);
+    ////console.log('📅 Tipo de período:', periodoTipo);
 
     // Calcular fechas según el periodoTipo
     let fechaInicio, fechaFin;
@@ -1072,11 +1072,11 @@ async function consultarMetrosCuadrados(criterios) {
     }
    
 
-    console.log('📅 Período de búsqueda:', {
-      inicio: fechaInicio.toISOString(),
-      fin: fechaFin.toISOString(),
-      tipo: periodoTipo
-    });
+    ////console.log('📅 Período de búsqueda:', {
+   //   inicio: fechaInicio.toISOString(),
+  //    fin: fechaFin.toISOString(),
+ //     tipo: periodoTipo
+  //  });
 
     // Buscar usuario
     const usuario = await UsuariosTelefono.findOne({
@@ -1089,7 +1089,7 @@ async function consultarMetrosCuadrados(criterios) {
       activo: true
     });
 
-    console.log('👤 Usuario encontrado:', usuario);
+    ////console.log('👤 Usuario encontrado:', usuario);
 
     if (!usuario) {
       return {
@@ -1106,7 +1106,7 @@ async function consultarMetrosCuadrados(criterios) {
       }
     }).sort({ createdAt: 1 });
 
-    console.log(`📊 Registros encontrados: ${registros.length}`);
+    //console.log(`📊 Registros encontrados: ${registros.length}`);
 
     // Definir el texto del período según el tipo
     const periodoTexto = (() => {
@@ -1140,14 +1140,14 @@ async function consultarMetrosCuadrados(criterios) {
         // Normalizar el número de cuadrante (eliminar "Cuadrante" si existe)
         const numeroCuadrante = registro.cuadrante.replace(/[^0-9]/g, '');
         
-        console.log(`🔍 Buscando cuadrante: ${numeroCuadrante}`);
+        //console.log(`🔍 Buscando cuadrante: ${numeroCuadrante}`);
         
         const cuadrante = await Cuadrante.findOne({ 
           cuadrante: { $regex: new RegExp(`^(Cuadrante\\s*)?${numeroCuadrante}$`, 'i') }
         });
     
         if (!cuadrante) {
-          console.log(`⚠️ No se encontró el cuadrante ${numeroCuadrante}`);
+          //console.log(`⚠️ No se encontró el cuadrante ${numeroCuadrante}`);
           return {
             fecha: registro.createdAt,
             cuadrante: registro.cuadrante,
@@ -1172,12 +1172,12 @@ async function consultarMetrosCuadrados(criterios) {
           numeroPlaza = parseInt(registro.plaza.replace(/[^0-9]/g, ''));
         }
     
-        console.log(`🔍 Buscando plaza número ${numeroPlaza} en cuadrante ${numeroCuadrante}`);
+        //console.log(`🔍 Buscando plaza número ${numeroPlaza} en cuadrante ${numeroCuadrante}`);
     
         const plaza = cuadrante.plazas.find(p => p.numero === numeroPlaza);
     
         if (!plaza) {
-          console.log(`⚠️ No se encontró la plaza ${numeroPlaza} en cuadrante ${numeroCuadrante}`);
+          //console.log(`⚠️ No se encontró la plaza ${numeroPlaza} en cuadrante ${numeroCuadrante}`);
           return {
             fecha: registro.createdAt,
             cuadrante: registro.cuadrante,
@@ -1188,7 +1188,7 @@ async function consultarMetrosCuadrados(criterios) {
           };
         }
     
-        console.log(`✅ Plaza encontrada: ${plaza.tipoAreaVerde} ${plaza.numero} - ${plaza.metrosCuadrados}m²`);
+        //console.log(`✅ Plaza encontrada: ${plaza.tipoAreaVerde} ${plaza.numero} - ${plaza.metrosCuadrados}m²`);
     
         return {
           fecha: registro.createdAt,
@@ -1199,7 +1199,7 @@ async function consultarMetrosCuadrados(criterios) {
           direccion: plaza.direccion
         };
       } catch (error) {
-        console.error(`❌ Error procesando registro:`, error);
+        //console.error(`❌ Error procesando registro:`, error);
         return {
           fecha: registro.createdAt,
           cuadrante: registro.cuadrante,
@@ -1211,7 +1211,7 @@ async function consultarMetrosCuadrados(criterios) {
       }
     }));
 
-    console.log('📝 Detalle de registros procesados:', JSON.stringify(detalleRegistros, null, 2));
+    //console.log('📝 Detalle de registros procesados:', JSON.stringify(detalleRegistros, null, 2));
 
     const totalMetros = detalleRegistros.reduce((sum, reg) => sum + reg.metrosCuadrados, 0);
     const dias = Math.ceil((fechaFin - fechaInicio) / (1000 * 60 * 60 * 24));
@@ -1258,7 +1258,7 @@ async function consultarMetrosCuadrados(criterios) {
     };
 
   } catch (error) {
-    console.error('❌ Error en consultarMetrosCuadrados:', error);
+    //console.error('❌ Error en consultarMetrosCuadrados:', error);
     return {
       success: false,
       message: 'Error al procesar la consulta',
@@ -1269,13 +1269,13 @@ async function consultarMetrosCuadrados(criterios) {
 
 async function verificarCuadrantes() {
   const cuadrantes = await Cuadrante.find({});
-  console.log('Verificación de cuadrantes:');
+  //console.log('Verificación de cuadrantes:');
   cuadrantes.forEach(cuadrante => {
-    console.log(`\nCuadrante ${cuadrante.cuadrante}:`);
-    console.log(`Total plazas: ${cuadrante.plazas.length}`);
-    console.log('Plazas sin metros cuadrados:', 
-      cuadrante.plazas.filter(p => !p.metrosCuadrados).length);
-    console.log('Ejemplo plaza:', cuadrante.plazas[0]);
+    //console.log(`\nCuadrante ${cuadrante.cuadrante}:`);
+    //console.log(`Total plazas: ${cuadrante.plazas.length}`);
+    //console.log('Plazas sin metros cuadrados:', 
+    //  cuadrante.plazas.filter(p => !p.metrosCuadrados).length);
+    //console.log('Ejemplo plaza:', cuadrante.plazas[0]);
   });
 }
 
@@ -1290,10 +1290,10 @@ function isRegistroCompleto(registro) {
 }
 async function testMondayItemCreation() {
   try {
-    console.log('🧪 Iniciando prueba de creación de item...');
+    //console.log('🧪 Iniciando prueba de creación de item...');
     
     mondaySdk.setToken(process.env.MONDAY_API_TOKEN);
-    console.log('🔑 Token establecido');
+    //console.log('🔑 Token establecido');
 
     // Datos de prueba con formato correcto
     const testData = {
@@ -1305,7 +1305,7 @@ async function testMondayItemCreation() {
       fecha: new Date().toISOString().split('T')[0]
     };
 
-    console.log('📋 Datos de prueba:', testData);
+    //console.log('📋 Datos de prueba:', testData);
 
     // Crear item base
     const createMutation = `mutation($boardId: ID!, $itemName: String!) {
@@ -1323,7 +1323,7 @@ async function testMondayItemCreation() {
     };
 
     const createResponse = await mondaySdk.api(createMutation, { variables: createVariables });
-    console.log('✅ Item base creado:', createResponse);
+    //console.log('✅ Item base creado:', createResponse);
 
     const itemId = createResponse.data.create_item.id;
 
@@ -1360,7 +1360,7 @@ async function testMondayItemCreation() {
       }
     ];
 
-    console.log('🔄 Actualizando columnas...');
+    //console.log('🔄 Actualizando columnas...');
     
     for (const update of columnUpdates) {
       const updateMutation = `mutation($boardId: ID!, $itemId: ID!, $columnId: String!, $value: JSON!) {
@@ -1381,13 +1381,13 @@ async function testMondayItemCreation() {
         value: update.value
       };
 
-      console.log(`📝 Actualizando columna ${update.columnId}:`, update.value);
+      //console.log(`📝 Actualizando columna ${update.columnId}:`, update.value);
       
       const updateResponse = await mondaySdk.api(updateMutation, { variables: updateVariables });
       if (updateResponse.errors) {
-        console.error(`⚠️ Error en columna ${update.columnId}:`, updateResponse.errors);
+        //console.error(`⚠️ Error en columna ${update.columnId}:`, updateResponse.errors);
       } else {
-        console.log(`✅ Columna ${update.columnId} actualizada`);
+        //console.log(`✅ Columna ${update.columnId} actualizada`);
       }
     }
 
@@ -1404,7 +1404,7 @@ async function testMondayItemCreation() {
     }`;
 
     const verification = await mondaySdk.api(verifyQuery);
-    console.log('🔍 Verificación final:', JSON.stringify(verification, null, 2));
+    //console.log('🔍 Verificación final:', JSON.stringify(verification, null, 2));
 
     return {
       success: true,
@@ -1413,7 +1413,7 @@ async function testMondayItemCreation() {
     };
 
   } catch (error) {
-    console.error('❌ Error en prueba:', error);
+    //console.error('❌ Error en prueba:', error);
     return {
       success: false,
       error: error.message
@@ -1438,12 +1438,12 @@ async function sendImagesFromRegistration(chatId, images) {
 async function verifyMondayColumns() {
   try {
     const columns = await getMondayColumnIds();
-    console.log('Estructura de columnas:');
+    //console.log('Estructura de columnas:');
     columns.forEach(col => {
-      console.log(`- ${col.title}: ID=${col.id}, Type=${col.type}`);
+      //console.log(`- ${col.title}: ID=${col.id}, Type=${col.type}`);
     });
   } catch (error) {
-    console.error('Error al verificar columnas:', error);
+    //console.error('Error al verificar columnas:', error);
   }
 }
 const MONDAY_COLUMNS = {
@@ -1457,28 +1457,28 @@ const MONDAY_COLUMNS = {
 function initializeMondaySdk() {
   try {
     if (!process.env.MONDAY_API_TOKEN) {
-      console.error('ERROR: No se encontró MONDAY_API_TOKEN en las variables de entorno');
+      //console.error('ERROR: No se encontró MONDAY_API_TOKEN en las variables de entorno');
       return false;
     }
     
     mondaySdk.setToken(process.env.MONDAY_API_TOKEN);
-    console.log('Monday SDK inicializado correctamente');
+    //console.log('Monday SDK inicializado correctamente');
     return true;
   } catch (error) {
-    console.error('Error al inicializar Monday SDK:', error);
+    //console.error('Error al inicializar Monday SDK:', error);
     return false;
   }
 }
 async function confirmarRegistro(chatId, numeroTelefono, conversation) {
   try {
-    console.log('🔄 Iniciando confirmarRegistro:', { chatId, numeroTelefono });
+    //console.log('🔄 Iniciando confirmarRegistro:', { chatId, numeroTelefono });
 
     // 1. Verificar configuración de Monday.com
     if (!process.env.MONDAY_API_TOKEN || !process.env.MONDAY_BOARD_ID) {
-      console.error('❌ Faltan credenciales de Monday.com:', {
-        token: process.env.MONDAY_API_TOKEN ? '✓' : '✗',
-        boardId: process.env.MONDAY_BOARD_ID ? '✓' : '✗'
-      });
+      //console.error('❌ Faltan credenciales de Monday.com:', {
+      //  token: process.env.MONDAY_API_TOKEN ? '✓' : '✗',
+     //   boardId: process.env.MONDAY_BOARD_ID ? '✓' : '✗'
+    //  });
       throw new Error('Configuración de Monday.com incompleta');
     }
 
@@ -1494,7 +1494,7 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
     }
 
     const pendingData = pendingRegistrations.get(chatId);
-    console.log('📄 Datos pendientes:', pendingData);
+    //console.log('📄 Datos pendientes:', pendingData);
 
     // 3. Validar campos requeridos
     const camposFaltantes = [];
@@ -1516,7 +1516,7 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
     try {
       // 4. Verificar conexión con Monday.com
       await verifyMondayBoard();
-      console.log('✅ Conexión con Monday.com verificada');
+      //console.log('✅ Conexión con Monday.com verificada');
 
       // 5. Preparar registro completo
       const registroCompleto = {
@@ -1527,12 +1527,12 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
       };
 
       // 6. Guardar en MongoDB
-      console.log('💾 Guardando en MongoDB...');
+      //console.log('💾 Guardando en MongoDB...');
       const jardinGuardado = await registrarJardinDesdeChat(chatId, registroCompleto);
-      console.log('✅ Guardado en MongoDB exitoso:', jardinGuardado);
+      //console.log('✅ Guardado en MongoDB exitoso:', jardinGuardado);
 
       // 7. Crear en Monday.com
-      console.log('🔄 Creando registro en Monday.com...');
+      //console.log('🔄 Creando registro en Monday.com...');
       const mondayData = {
         cuadrante: registroCompleto.cuadrante,
         plaza: registroCompleto.plaza,
@@ -1542,16 +1542,16 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
       };
 
       const mondayResponse = await createMondayItem(mondayData);
-      console.log('✅ Registro creado en Monday.com:', mondayResponse);
+      //console.log('✅ Registro creado en Monday.com:', mondayResponse);
 
       // 8. Subir imágenes a Monday.com
       if (registroCompleto.images && registroCompleto.images.length > 0) {
-        console.log(`📸 Subiendo ${registroCompleto.images.length} imágenes...`);
+        //console.log(`📸 Subiendo ${registroCompleto.images.length} imágenes...`);
         const itemId = mondayResponse.data.create_item.id;
 
         for (const [index, image] of registroCompleto.images.entries()) {
           try {
-            console.log(`📤 Subiendo imagen ${index + 1}/${registroCompleto.images.length}`);
+            //console.log(`📤 Subiendo imagen ${index + 1}/${registroCompleto.images.length}`);
             
             const fileName = `imagen_${Date.now()}_${index + 1}.jpg`;
             const uploadResult = await uploadImageToMonday(
@@ -1562,12 +1562,12 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
             );
       
             if (uploadResult.success) {
-              console.log(`✅ Imagen ${index + 1} subida exitosamente:`, uploadResult.data);
+              //console.log(`✅ Imagen ${index + 1} subida exitosamente:`, uploadResult.data);
             } else {
-              console.error(`❌ Error al subir imagen ${index + 1}:`, uploadResult.error);
+              //console.error(`❌ Error al subir imagen ${index + 1}:`, uploadResult.error);
             }
           } catch (imageError) {
-            console.error(`❌ Error al procesar imagen ${index + 1}:`, imageError);
+            //console.error(`❌ Error al procesar imagen ${index + 1}:`, imageError);
           }
         }
       }
@@ -1612,7 +1612,7 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
       return null;
 
     } catch (error) {
-      console.error('❌ Error en el proceso:', error);
+      //console.error('❌ Error en el proceso:', error);
       const errorMessage = 
         '⚠️ Error al procesar el registro:\n' +
         '1. Verifica tu conexión\n' +
@@ -1630,7 +1630,7 @@ async function confirmarRegistro(chatId, numeroTelefono, conversation) {
     }
 
   } catch (error) {
-    console.error('❌ Error crítico:', error);
+    //console.error('❌ Error crítico:', error);
     const criticalMessage = '⚠️ Error crítico. Contacta al soporte técnico.';
     
     if (conversation) {
@@ -1664,21 +1664,21 @@ async function verifyMondayBoard() {
       }
     }`;
     
-    console.log('Verificando tablero de Monday.com...');
+    //console.log('Verificando tablero de Monday.com...');
     const response = await mondaySdk.api(query);
     
     if (response.errors) {
       throw new Error(`Error en la respuesta de Monday.com: ${JSON.stringify(response.errors)}`);
     }
 
-    console.log('Estructura del tablero Monday.com:', JSON.stringify(response.data, null, 2));
+    //console.log('Estructura del tablero Monday.com:', JSON.stringify(response.data, null, 2));
     return response;
   } catch (error) {
-    console.error('Error detallado al verificar tablero Monday.com:', {
-      message: error.message,
-      stack: error.stack,
-      timestamp: new Date().toISOString()
-    });
+    //console.error('Error detallado al verificar tablero Monday.com:', {
+    //  message: error.message,
+    //  stack: error.stack,
+    //  timestamp: new Date().toISOString()
+   // });
     throw error;
   }
 }
@@ -1686,7 +1686,7 @@ async function verifyMondayBoard() {
 verifyMondayBoard();
 async function checkMondayConfiguration() {
   try {
-    console.log('Verificando configuración de Monday.com...');
+    //console.log('Verificando configuración de Monday.com...');
     
     // Verificar variables de entorno
     const configStatus = {
@@ -1694,7 +1694,7 @@ async function checkMondayConfiguration() {
       MONDAY_BOARD_ID: process.env.MONDAY_BOARD_ID ? '✅ Presente' : '❌ Falta'
     };
     
-    console.log('Estado de configuración:', configStatus);
+    //console.log('Estado de configuración:', configStatus);
 
     // Intentar inicializar SDK
     const sdkInitialized = initializeMondaySdk();
@@ -1706,13 +1706,13 @@ async function checkMondayConfiguration() {
     const boardVerification = await verifyMondayBoard();
     
     if (boardVerification.data?.boards?.[0]) {
-      console.log('✅ Conexión con Monday.com verificada exitosamente');
+      //console.log('✅ Conexión con Monday.com verificada exitosamente');
       return true;
     } else {
       throw new Error('No se pudo verificar la estructura del tablero');
     }
   } catch (error) {
-    console.error('❌ Error en la verificación de Monday.com:', error.message);
+    //console.error('❌ Error en la verificación de Monday.com:', error.message);
     return false;
   }
 }
@@ -1742,7 +1742,7 @@ async function handleMessage(req, res) {
 }
 async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
   try {
-    console.log('Procesando consulta con argumentos:', functionArgs);
+    //console.log('Procesando consulta con argumentos:', functionArgs);
     let mongoQuery = {};
     let registros;
     let startDate, endDate;
@@ -1914,7 +1914,7 @@ async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
         .limit(50); // Limitar resultados para evitar sobrecarga
     }
 
-    console.log(`📊 Se encontraron ${registros.length} registros`);
+    //console.log(`📊 Se encontraron ${registros.length} registros`);
 
     if (registros.length === 0) {
       const noRecordsMessage = functionArgs.tipo === 'fecha' ? 
@@ -1952,7 +1952,7 @@ async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
           images: registro.images || []
         };
       } catch (error) {
-        console.error('Error procesando registro:', error);
+        //console.error('Error procesando registro:', error);
         return registro.toObject();
       }
     }));
@@ -2051,7 +2051,7 @@ async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
     };
 
   } catch (error) {
-    console.error('❌ Error en consultarRegistros:', error);
+    //console.error('❌ Error en consultarRegistros:', error);
     const errorMessage = `Error al procesar la consulta: ${error.message}\n` +
                         'Por favor, intente reformular su consulta o contacte al soporte técnico.';
     
@@ -2076,12 +2076,12 @@ async function consultarRegistros(functionArgs, conversation, numeroTelefono) {
 
 async function uploadImageToMonday(imageData, fileName, mimeType, itemId) {
   try {
-    console.log('📤 Iniciando subida de imagen a Monday.com:', {
-      fileName,
-      mimeType,
-      itemId,
-      imageSize: imageData.length
-    });
+    //console.log('📤 Iniciando subida de imagen a Monday.com:', {
+    //  fileName,
+    //  mimeType,
+   //   itemId,
+  //    imageSize: imageData.length
+  //  });
 
     if (!imageData || !itemId) {
       throw new Error('Se requieren datos de imagen y ID del item');
@@ -2122,7 +2122,7 @@ async function uploadImageToMonday(imageData, fileName, mimeType, itemId) {
     // Limpiar archivo temporal
     fs.unlinkSync(tempFilePath);
 
-    console.log('📥 Respuesta de Monday.com:', response.data);
+    //console.log('📥 Respuesta de Monday.com:', response.data);
 
     if (response.data.errors) {
       throw new Error(JSON.stringify(response.data.errors));
@@ -2134,7 +2134,7 @@ async function uploadImageToMonday(imageData, fileName, mimeType, itemId) {
     };
 
   } catch (error) {
-    console.error('❌ Error en uploadImageToMonday:', error);
+    //console.error('❌ Error en uploadImageToMonday:', error);
     return {
       success: false,
       error: error.message,
@@ -2301,7 +2301,7 @@ ${previousResults
     }
 
     const assistantMessage = response.choices[0].message;
-    console.log('Assistant message:', assistantMessage);
+    //console.log('Assistant message:', assistantMessage);
 
     if (assistantMessage.function_call) {
       const functionName = assistantMessage.function_call.name;
@@ -2319,7 +2319,7 @@ ${previousResults
         return { text: notAuthorizedMessage, media: [] };
       }
 
-      console.log(`🔄 Iniciando handleFunctionCall:`, { functionName, chatId, numeroTelefono });
+      //console.log(`🔄 Iniciando handleFunctionCall:`, { functionName, chatId, numeroTelefono });
       
       const functionResponse = await handleFunctionCall(chatId, functionName, functionArgs, conversation, numeroTelefono);
       if (functionResponse === null) {
@@ -2360,7 +2360,7 @@ ${previousResults
       return { text: defaultMessage, media: [] };
     }
   } catch (error) {
-    console.error('Error en getLLMResponse:', error);
+    //console.error('Error en getLLMResponse:', error);
     return { text: 'Lo siento, ha ocurrido un error al procesar tu mensaje.', media: [] };
   }
 }
@@ -2375,7 +2375,7 @@ async function handleNewMessages(req, res) {
 
       // Ignorar mensajes de tipo 'unknown' o con origen 'system'
       if (message.type === 'unknown' || message.source === 'system') {
-        console.log('Ignoring system message:', JSON.stringify(message, null, 2));
+        //console.log('Ignoring system message:', JSON.stringify(message, null, 2));
         continue;
       }
 
@@ -2402,7 +2402,7 @@ async function handleNewMessages(req, res) {
 
     res.send('Ok');
   } catch (e) {
-    console.error('Error en handleNewMessages:', e);
+    //console.error('Error en handleNewMessages:', e);
     res.status(500).send(e.message);
   }
 }
@@ -2420,7 +2420,7 @@ async function processMessage(message, chatId, numeroTelefono) {
     return;
   }
 
-  console.log('Received message:', JSON.stringify(message, null, 2));
+  //console.log('Received message:', JSON.stringify(message, null, 2));
 
   try {
     if (message.type === 'text') {
@@ -2512,7 +2512,7 @@ async function processMessage(message, chatId, numeroTelefono) {
             await sendWhapiRequest('messages/text', { to: chatId, body: responseObj.text });
           }
         } catch (error) {
-          console.error('Error al procesar imagen:', error);
+          //console.error('Error al procesar imagen:', error);
           if (error.message !== 'Response already handled') {
             await sendWhapiRequest('messages/text', {
               to: chatId,
@@ -2569,7 +2569,7 @@ async function processMessage(message, chatId, numeroTelefono) {
           await sendWhapiRequest('messages/text', { to: chatId, body: responseObj.text });
         }
       } catch (error) {
-        console.error('Error al procesar audio:', error);
+        //console.error('Error al procesar audio:', error);
         if (error.message !== 'Response already handled') {
           await sendWhapiRequest('messages/text', {
             to: chatId,
@@ -2584,7 +2584,7 @@ async function processMessage(message, chatId, numeroTelefono) {
       });
     }
   } catch (error) {
-    console.error('Error en processMessage:', error);
+    //console.error('Error en processMessage:', error);
     // No enviar mensaje de error si la respuesta ya fue manejada
     if (error.message !== 'Response already handled') {
       await sendWhapiRequest('messages/text', {
@@ -2664,7 +2664,7 @@ async function handleImageMessage(message, chatId, numeroTelefono, userType) {
     }
     // Si hay medios en la respuesta, ya fueron manejados en getLLMResponse
   } catch (error) {
-    console.error('Error al procesar el mensaje de imagen:', error);
+    //console.error('Error al procesar el mensaje de imagen:', error);
     const responseText = 'Lo siento, ha ocurrido un error al procesar la imagen.';
     await sendWhapiRequest('messages/text', { to: chatId, body: responseText });
   }
@@ -2863,7 +2863,7 @@ async function confirmarRegistroPrograma(chatId, numeroTelefono, conversation) {
 
     return null;
   } catch (error) {
-    console.error('Error al confirmar registro de programa:', error);
+    //console.error('Error al confirmar registro de programa:', error);
     const errorMessage = '⚠️ Error al guardar el registro de programa. Por favor, inténtalo nuevamente.';
     conversation.push({ role: 'assistant', content: errorMessage });
     await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
@@ -2883,7 +2883,7 @@ function isProgramaRegistroCompleto(registro) {
 }
 async function consultarProgramas(functionArgs, conversation, numeroTelefono) {
   try {
-    console.log('Procesando consulta de programas con argumentos:', functionArgs);
+   // ////console.log('Procesando consulta de programas con argumentos:', functionArgs);
     let mongoQuery = {};
     let programas;
     let startDate, endDate;
@@ -3001,7 +3001,7 @@ async function consultarProgramas(functionArgs, conversation, numeroTelefono) {
         .limit(50); // Limitar resultados para evitar sobrecarga
     }
 
-    console.log(`📊 Se encontraron ${programas.length} programas`);
+  //  ////console.log(`📊 Se encontraron ${programas.length} programas`);
 
     if (programas.length === 0) {
       const noRecordsMessage = functionArgs.tipo === 'fecha' ? 
@@ -3063,7 +3063,7 @@ async function consultarProgramas(functionArgs, conversation, numeroTelefono) {
     };
 
   } catch (error) {
-    console.error('❌ Error en consultarProgramas:', error);
+  //  ////console.error('❌ Error en consultarProgramas:', error);
     const errorMessage = `Error al procesar la consulta: ${error.message}\n` +
                         'Por favor, intente reformular su consulta o contacte al soporte técnico.';
     
@@ -3085,12 +3085,12 @@ async function consultarProgramas(functionArgs, conversation, numeroTelefono) {
 
 async function handleFunctionCall(chatId, functionName, functionArgs, conversation, numeroTelefono) {
   try {
-    console.log('🔄 Iniciando handleFunctionCall:', {
-      functionName,
-      chatId,
-      numeroTelefono,
-      argumentos: functionArgs
-    });
+    ////console.log('Iniciando handleFunctionCall:', {
+    //  functionName,
+    //  chatId,
+   //   numeroTelefono,
+  //    argumentos: functionArgs
+ //   });
 
     switch (functionName) {
       case 'registrarJardin':
@@ -3116,7 +3116,7 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
           }
 
           pendingRegistrations.set(chatId, registro);
-          console.log('📝 Registro actualizado:', registro);
+        //  ////console.log('📝 Registro actualizado:', registro);
 
           // Preparar mensaje de confirmación
           const confirmationRequest = 
@@ -3135,12 +3135,12 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
 
           return { text: confirmationRequest, media: [] };
         } catch (error) {
-          console.error('❌ Error en registrarJardin:', error);
+        //  ////console.error('❌ Error en registrarJardin:', error);
           throw error;
         }
 
       case 'confirmarRegistro':
-        console.log('🔄 Iniciando proceso de confirmación');
+      //  ////console.log('🔄 Iniciando proceso de confirmación');
         try {
           // Verificar Monday SDK
           if (!initializeMondaySdk()) {
@@ -3148,10 +3148,10 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
           }
 
           const resultado = await confirmarRegistro(chatId, numeroTelefono, conversation);
-          console.log('✅ Confirmación exitosa:', resultado);
+     //     ////console.log('✅ Confirmación exitosa:', resultado);
           return resultado;
         } catch (error) {
-          console.error('❌ Error en confirmarRegistro:', error);
+        //  ////console.error('❌ Error en confirmarRegistro:', error);
           const errorMessage = 
             '⚠️ Error al confirmar el registro:\n' +
             error.message + '\n\n' +
@@ -3199,7 +3199,7 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
         
             return { text: resultado.message, media: [] };
           } catch (error) {
-            console.error('Error en consultarMetrosCuadrados:', error);
+            ////console.error('Error en consultarMetrosCuadrados:', error);
             const errorMessage = 'Error al procesar la consulta de metros cuadrados.';
             conversation.push({ role: 'assistant', content: errorMessage });
             await guardarConversacion(numeroTelefono, { role: 'assistant', content: errorMessage });
@@ -3240,7 +3240,7 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
         
             return { text: respuesta, media: [] };
           } catch (error) {
-            console.error('Error en consultarMetrosCuadrados:', error);
+            ////console.error('Error en consultarMetrosCuadrados:', error);
             return { 
               text: 'Error al procesar la consulta de metros cuadrados.', 
               media: [] 
@@ -3268,7 +3268,7 @@ async function handleFunctionCall(chatId, functionName, functionArgs, conversati
         return { text: unsupportedMessage, media: [] };
     }
   } catch (error) {
-    console.error('❌ Error crítico en handleFunctionCall:', error);
+    ////console.error('❌ Error crítico en handleFunctionCall:', error);
     const criticalError = 
       '⚠️ Error crítico del sistema:\n' +
       'Por favor, contacta al soporte técnico.\n' +
@@ -3332,19 +3332,19 @@ async function uploadMediaToWhatsApp(imageData, mimeType) {
       maxBodyLength: Infinity
     });
 
-    console.log('Upload media response:', response.data);
+    ////console.log('Upload media response:', response.data);
 
     if (response.data.media && response.data.media[0] && response.data.media[0].id) {
       return response.data.media[0].id;
     } else {
-      console.error('Error al subir media:', response.data);
+      ////console.error('Error al subir media:', response.data);
       return null;
     }
   } catch (error) {
-    console.error('Error al subir media a WhatsApp:', error);
+    ////console.error('Error al subir media a WhatsApp:', error);
     if (error.response) {
-      console.error('Response data:', error.response.data);
-      console.error('Response status:', error.response.status);
+      ////console.error('Response data:', error.response.data);
+      ////console.error('Response status:', error.response.status);
     }
     return null;
   }
@@ -3408,7 +3408,7 @@ async function handleAudioMessage(message, chatId, numeroTelefono, userType) {
     }
     // Si hay medios en la respuesta, ya fueron manejados en getLLMResponse
   } catch (error) {
-    console.error('Error al procesar el mensaje de audio:', error);
+    ////console.error('Error al procesar el mensaje de audio:', error);
     const responseText = 'Lo siento, ha ocurrido un error al procesar el audio.';
     await sendWhapiRequest('messages/text', { to: chatId, body: responseText });
   }
@@ -3424,10 +3424,10 @@ async function transcribeAudio(audioPath) {
     });
 
     const transcription = response.text;
-    console.log('Transcripción:', transcription);
+    ////console.log('Transcripción:', transcription);
     return transcription;
   } catch (error) {
-    console.error('Error al transcribir el audio:', error);
+    ////console.error('Error al transcribir el audio:', error);
     return null;
   }
 }
@@ -3482,16 +3482,16 @@ async function uploadMediaToWhatsApp(imageData, mimeType) {
     });
 
     const json = await response.json();
-    console.log('Upload media response:', json);
+    ////console.log('Upload media response:', json);
 
     if (json.media && json.media[0] && json.media[0].id) {
       return json.media[0].id;
     } else {
-      console.error('Error al subir media:', json);
+      ////console.error('Error al subir media:', json);
       return null;
     }
   } catch (error) {
-    console.error('Error al subir media a WhatsApp:', error);
+    ////console.error('Error al subir media a WhatsApp:', error);
     return null;
   }
 }
@@ -3510,7 +3510,7 @@ async function sendWhapiRequest(endpoint, params = {}, method = 'POST') {
           'Content-Type': 'application/json'
         }
       });
-      console.log('Whapi response:', JSON.stringify(response.data, null, 2));
+      ////console.log('Whapi response:', JSON.stringify(response.data, null, 2));
       return response.data;
     } else if (endpoint === 'messages/text') {
       const response = await axios.post(`${config.apiUrl}/${endpoint}`, {
@@ -3522,7 +3522,7 @@ async function sendWhapiRequest(endpoint, params = {}, method = 'POST') {
           'Content-Type': 'application/json'
         }
       });
-      console.log('Whapi response:', JSON.stringify(response.data, null, 2));
+      ////console.log('Whapi response:', JSON.stringify(response.data, null, 2));
       return response.data;
     } else if (params?.media) {
       const form = new FormData();
@@ -3544,7 +3544,7 @@ async function sendWhapiRequest(endpoint, params = {}, method = 'POST') {
           'Accept': 'application/json'
         }
       });
-      console.log('Whapi response:', JSON.stringify(response.data, null, 2));
+      ////console.log('Whapi response:', JSON.stringify(response.data, null, 2));
       return response.data;
     } else {
       const response = await axios({
@@ -3556,14 +3556,14 @@ async function sendWhapiRequest(endpoint, params = {}, method = 'POST') {
         },
         data: params
       });
-      console.log('Whapi response:', JSON.stringify(response.data, null, 2));
+      ////console.log('Whapi response:', JSON.stringify(response.data, null, 2));
       return response.data;
     }
   } catch (error) {
-    console.error('Error en sendWhapiRequest:', error);
+    ////console.error('Error en sendWhapiRequest:', error);
     if (error.response) {
-      console.error('Response data:', error.response.data);
-      console.error('Response status:', error.response.status);
+      ////console.error('Response data:', error.response.data);
+      ////console.error('Response status:', error.response.status);
     }
     throw error;
   }
@@ -3594,9 +3594,9 @@ async function setHook() {
 }
 checkMondayConfiguration().then(isConfigured => {
   if (isConfigured) {
-    console.log('✅ Monday.com configurado correctamente');
+    ////console.log('✅ Monday.com configurado correctamente');
   } else {
-    console.log('⚠️ Monday.com no está configurado correctamente');
+    ////console.log('⚠️ Monday.com no está configurado correctamente');
   }
 });
 
@@ -3607,11 +3607,11 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.send('Bot is running'));
 app.post('/hook/messages', handleNewMessages);
 app.use((req, res, next) => {
-  console.log('🔄 Nueva solicitud:', {
-    path: req.path,
-    method: req.method,
-    timestamp: new Date().toISOString()
-  });
+  ////console.log('🔄 Nueva solicitud:', {
+   // path: req.path,
+  //  method: req.method,
+  //  timestamp: new Date().toISOString()
+//  });
   next();
 });
 verifyMondayColumns();
